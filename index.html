@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineStream Premium | Next-Gen Entertainment Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Modern Clean CSS Reset & Design Framework Tokens */
+        :root {
+            --bg-deep: #060608;
+            --bg-surface: #101014;
+            --bg-surface-elevated: #16161c;
+            --accent-primary: #e50914;
+            --accent-glow: rgba(229, 9, 20, 0.45);
+            --text-primary: #f5f5f7;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --text-accent: #f59e0b;
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --border-focus: rgba(229, 9, 20, 0.6);
+            --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            --radius-main: 14px;
+            --radius-pill: 100px;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-smooth: all 0.5s var(--ease-out-expo);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Fluid, sleek premium custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27273a;
+            border-radius: var(--radius-pill);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f5a;
+        }
+
+        /* Premium Glassmorphic Navigation Component */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 24px 5%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(6, 6, 8, 0.9) 0%, rgba(6, 6, 8, 0) 100%);
+            backdrop-filter: blur(0px);
+            transition: var(--transition-smooth);
+        }
+
+        header.scrolled {
+            padding: 14px 5%;
+            background: rgba(10, 10, 14, 0.8);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border-subtle);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logo span {
+            color: var(--accent-primary);
+            position: relative;
+        }
+
+        /* Interactive Filter Control Tabs Header */
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            width: 100%;
+            justify-content: flex-end;
+        }
+
+        .category-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 4px;
+            border-radius: var(--radius-pill);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 8px 18px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
+        }
+
+        /* Search Dynamic Input UX element */
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-container input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            padding: 10px 16px 10px 38px;
+            border-radius: var(--radius-pill);
+            color: white;
+            font-size: 0.85rem;
+            font-family: var(--font-main);
+            outline: none;
+            width: 220px;
+            transition: var(--transition-smooth);
+        }
+
+        .search-container input:focus {
+            width: 320px;
+            border-color: var(--border-focus);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.15);
+        }
+
+        .search-container svg {
+            position: absolute;
+            left: 14px;
+            width: 16px;
+            height: 16px;
+            fill: var(--text-secondary);
+            transition: var(--transition-smooth);
+        }
+
+        .search-container input:focus + svg {
+            fill: var(--accent-primary);
+        }
+
+        /* High-End Immersive Cinematic Spotlight Hero Section */
+        .spotlight-hero {
+            height: 85vh;
+            min-height: 550px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            background-size: cover !important;
+            background-position: center 20% !important;
+            background-repeat: no-repeat !important;
+            margin-bottom: 20px;
+            transition: var(--transition-smooth);
+        }
+
+        .spotlight-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(6,6,8,0.95) 25%, rgba(6,6,8,0.7) 50%, rgba(6,6,8,0) 90%),
+                        linear-gradient(to top, var(--bg-deep) 0%, rgba(6,6,8,0.3) 40%, rgba(6,6,8,0) 100%);
+            z-index: 1;
+        }
+
+        .hero-inner {
+            max-width: 620px;
+            z-index: 2;
+            margin-top: 60px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s var(--ease-out-expo) forwards;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .badge-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .spotlight-badge {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, #b80710 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(229, 9, 20, 0.25);
+        }
+
+        .genre-badge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            padding: 4px 12px;
+            border-radius: var(--radius-pill);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 18px;
+            letter-spacing: -1.5px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .rating-star {
+            color: var(--text-accent);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 700;
+        }
+
+        .hero-description {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: rgba(245, 245, 247, 0.8);
+            margin-bottom: 36px;
+        }
+
+        .btn-stream {
+            background: var(--text-primary);
+            color: var(--bg-deep);
+            border: none;
+            padding: 14px 32px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: var(--radius-main);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition-smooth);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-stream:hover {
+            transform: translateY(-3px);
+            background: var(--accent-primary);
+            color: white;
+            box-shadow: 0 12px 30px var(--accent-glow);
+        }
+
+        /* Core Structure Responsive Content Layout Frame */
+        .content-wrap {
+            padding: 20px 5% 80px 5%;
+            position: relative;
+            z-index: 5;
+        }
+
+        .row-container {
+            margin-bottom: 48px;
+            transition: var(--transition-smooth);
+        }
+
+        .row-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .row-title::before {
+            content: '';
+            width: 4px;
+            height: 18px;
+            background: var(--accent-primary);
+            border-radius: var(--radius-pill);
+        }
+
+        /* High Performance Responsive CSS Grid System Component Layout */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 28px;
+        }
+
+        /* Professional Cards Framework Configuration UI/UX */
+        .media-card {
+            background: var(--bg-surface);
+            border-radius: var(--radius-main);
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition-smooth);
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .media-card:hover {
+            transform: translateY(-12px);
+            background: var(--bg-surface-elevated);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .poster-wrapper {
+            position: relative;
+            padding-top: 145%;
+            background: #15151c;
+            overflow: hidden;
+        }
+
+        .poster-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s var(--ease-out-expo);
+        }
+
+        .media-card:hover .poster-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .card-dark-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(6, 6, 8, 0.85) 0%, rgba(6, 6, 8, 0.2) 50%, transparent 100%);
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        .media-card:hover .card-dark-overlay {
+            opacity: 1;
+        }
+
+        .floating-play-btn {
+            background: var(--accent-primary);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px var(--accent-glow);
+            transform: scale(0.8) translateY(15px);
+            transition: var(--transition-smooth);
+        }
+
+        .media-card:hover .floating-play-btn {
+            transform: scale(1) translateY(0);
+        }
+
+        .card-body {
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .type-tag {
+            color: var(--accent-primary);
+        }
+
+        .card-rating {
+            color: var(--text-accent);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.35;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-primary);
+        }
+
+        .card-genre {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Immersive Premium Cinematic Stream Player View Modal Overlay Window */
+        .player-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 4, 6, 0.94);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .player-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .player-window-box {
+            width: 95%;
+            max-width: 1150px;
+            position: relative;
+            transform: scale(0.92) translateY(10px);
+            transition: var(--transition-smooth);
+        }
+
+        .player-modal.active .player-window-box {
+            transform: scale(1) translateY(0);
+        }
+
+        .cinema-aspect-ratio {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 0 0 120px rgba(229, 9, 20, 0.15);
+            border-radius: var(--radius-main);
+            overflow: hidden;
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .cinema-aspect-ratio iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .close-player-btn {
+            position: absolute;
+            top: -56px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: white;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        .close-player-btn:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            transform: rotate(90deg);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        /* Clean State Empty Exception Handler Design View */
+        .empty-search-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 0;
+            color: var(--text-secondary);
+        }
+        
+        .empty-search-state svg {
+            width: 48px;
+            height: 48px;
+            fill: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        /* ------------------------------------------------------------- */
+        /* CRITICAL: MOBILE & TABLET RESPONSIVE UX OPTIMIZATION BREAKPOINTS */
+        /* ------------------------------------------------------------- */
+        
+        @media (max-width: 1024px) {
+            .hero-title { font-size: 2.8rem; }
+            .spotlight-hero { height: 75vh; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 16px 4%; }
+            header.scrolled { padding: 12px 4%; }
+            .nav-controls { gap: 12px; }
+            .search-container input { width: 160px; padding-top: 8px; padding-bottom: 8px; }
+            .search-container input:focus { width: 200px; }
+            .spotlight-hero { height: 65vh; padding: 0 4%; }
+            .hero-title { font-size: 2.2rem; letter-spacing: -1px; }
+            
+            .hero-description {
+                font-size: 0.95rem; margin-bottom: 24px;
+                display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+            }
+
+            .content-wrap { padding: 10px 4% 60px 4%; }
+            .media-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
+            .card-body { padding: 12px; }
+            .card-title { font-size: 0.9rem; }
+            .card-genre { font-size: 0.75rem; }
+            
+            .close-player-btn {
+                top: 12px; right: 12px; z-index: 10;
+                background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            header { flex-direction: column; gap: 12px; background: var(--bg-deep); padding: 12px 4%; }
+            header.scrolled { padding: 12px 4%; }
+            .nav-controls { justify-content: space-between; width: 100%; }
+            .category-tabs { flex-grow: 1; justify-content: center; }
+            .tab-btn { padding: 6px 12px; font-size: 0.75rem; flex-grow: 1; text-align: center; }
+            .search-container input { width: 130px; font-size: 0.8rem; }
+            .search-container input:focus { width: 150px; }
+            .spotlight-hero { height: 55vh; min-height: 400px; padding-top: 80px; }
+            .hero-title { font-size: 1.8rem; }
+            .hero-meta, .hero-description { display: none; }
+            .media-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .row-title { font-size: 1.15rem; margin-bottom: 16px; }
+            .btn-stream { padding: 10px 20px; font-size: 0.85rem; width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="app-navigation">
+        <a href="#" class="logo" onclick="resetFilters(event)">Cine<span>Stream</span></a>
+        <div class="nav-controls">
+            <div class="category-tabs">
+                <button class="tab-btn active" onclick="filterCategory('all', this)">All</button>
+                <button class="tab-btn" onclick="filterCategory('movie', this)">Movies</button>
+                <button class="tab-btn" onclick="filterCategory('series', this)">Series</button>
+            </div>
+            <div class="search-container">
+                <input type="text" id="live-search" placeholder="Quick search...">
+                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            </div>
+        </div>
+    </header>
+
+    <section class="spotlight-hero" id="hero-spotlight-box">
+        <div class="hero-inner" id="hero-content-target"></div>
+    </section>
+
+    <main class="content-wrap">
+        <section class="row-container" id="movies-track-wrapper">
+            <h2 class="row-title">Featured Hollywood Movies</h2>
+            <div class="media-grid" id="movies-render-grid"></div>
+        </section>
+
+        <section class="row-container" id="series-track-wrapper">
+            <h2 class="row-title">Must-Watch Web Series</h2>
+            <div class="media-grid" id="series-render-grid"></div>
+        </section>
+    </main>
+
+    <div class="player-modal" id="global-player-overlay">
+        <div class="player-window-box">
+            <button class="close-player-btn" id="close-frame-trigger">&times;</button>
+            <div class="cinema-aspect-ratio">
+                <iframe id="cinema-frame-element" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        let activeCategoryFilter = 'all';
+        let continuousSearchString = '';
+
+        function initializeStreamingHub() {
+            if (typeof contentDatabase === 'undefined') {
+                console.error("Data tracking error: missing data.js!");
+                return;
+            }
+            renderShowcaseSpotlightHero();
+            renderMediaGridCollections(contentDatabase);
+            setupSearchEngineListener();
+        }
+
+        function renderShowcaseSpotlightHero() {
+            if (contentDatabase.length === 0) return;
+            const sorted = [...contentDatabase].sort((a,b) => parseFloat(b.rating) - parseFloat(a.rating));
+            const heroItem = sorted[0];
+
+            const heroBox = document.getElementById('hero-spotlight-box');
+            const targetInner = document.getElementById('hero-content-target');
+            heroBox.style.background = `url('${heroItem.poster}')`;
+
+            targetInner.innerHTML = `
+                <div class="badge-row">
+                    <span class="spotlight-badge">Spotlight ${heroItem.type}</span>
+                    <span class="genre-badge">${heroItem.genre}</span>
+                </div>
+                <h1 class="hero-title">${heroItem.title}</h1>
+                <div class="hero-meta">
+                    <span class="rating-star">★ ${heroItem.rating} IMDb</span>
+                    <span>•</span> <span>Ultra HD</span>
+                </div>
+                <p class="hero-description">${heroItem.description || ''}</p>
+                <button class="btn-stream" onclick="openCinemaScreen('${heroItem.streamUrl}')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Play Now
+                </button>
+            `;
+        }
+
+        function renderMediaGridCollections(filteredDataset) {
+            const movieGrid = document.getElementById('movies-render-grid');
+            const seriesGrid = document.getElementById('series-render-grid');
+            const movieTrack = document.getElementById('movies-track-wrapper');
+            const seriesTrack = document.getElementById('series-track-wrapper');
+
+            movieGrid.innerHTML = '';
+            seriesGrid.innerHTML = '';
+            let countMovies = 0, countSeries = 0;
+
+            filteredDataset.forEach(item => {
+                if (activeCategoryFilter !== 'all' && item.type !== activeCategoryFilter) return;
+
+                const card = document.createElement('div');
+                card.className = 'media-card';
+                card.innerHTML = `
+                    <div class="poster-wrapper">
+                        <img src="${item.poster}" alt="${item.title}" loading="lazy">
+                        <div class="card-dark-overlay">
+                            <div class="floating-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-info-header">
+                            <span class="type-tag">${item.type}</span>
+                            <span class="card-rating">★ ${item.rating}</span>
+                        </div>
+                        <h3 class="card-title" title="${item.title}">${item.title}</h3>
+                        <span class="card-genre">${item.genre}</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => openCinemaScreen(item.streamUrl));
+
+                if (item.type === 'movie') { movieGrid.appendChild(card); countMovies++; } 
+                else if (item.type === 'series') { seriesGrid.appendChild(card); countSeries++; }
+            });
+
+            movieTrack.style.display = countMovies > 0 ? 'block' : 'none';
+            seriesTrack.style.display = countSeries > 0 ? 'block' : 'none';
+
+            if (countMovies === 0 && countSeries === 0) {
+                movieTrack.style.display = 'block';
+                movieGrid.innerHTML = `<div class="empty-search-state"><p>No results match your search queries.</p></div>`;
+            }
+        }
+
+        function setupSearchEngineListener() {
+            document.getElementById('live-search').addEventListener('input', (e) => {
+                continuousSearchString = e.target.value.toLowerCase().trim();
+                executeCombinedFilters();
+            });
+        }
+
+        function filterCategory(category, elementPointer) {
+            activeCategoryFilter = category;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            elementPointer.classList.add('active');
+            executeCombinedFilters();
+        }
+
+        function executeCombinedFilters() {
+            const filtered = contentDatabase.filter(item => 
+                item.title.toLowerCase().includes(continuousSearchString) || 
+                item.genre.toLowerCase().includes(continuousSearchString)
+            );
+            renderMediaGridCollections(filtered);
+        }
+
+        function resetFilters(e) {
+            e.preventDefault();
+            document.getElementById('live-search').value = '';
+            continuousSearchString = '';
+            filterCategory('all', document.querySelector('.category-tabs .tab-btn'));
+        }
+
+        const globalModal = document.getElementById('global-player-overlay');
+        const framePlayer = document.getElementById('cinema-frame-element');
+
+        function openCinemaScreen(url) {
+            framePlayer.src = url;
+            globalModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCinemaScreen() {
+            globalModal.classList.remove('active');
+            framePlayer.src = '';
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('close-frame-trigger').addEventListener('click', closeCinemaScreen);
+        globalModal.addEventListener('click', (e) => { if (e.target === globalModal) closeCinemaScreen(); });
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('app-navigation');
+            if (window.scrollY > 30) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        document.addEventListener('DOMContentLoaded', initializeStreamingHub);
+    </script>
+</body>
+</html>
