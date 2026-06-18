@@ -12,8 +12,8 @@ const contentDatabase = [
         id: "bhooth-bangla-2026",
         title: "Bhooth Bangla (2026)",
         type: "movie",
-        genre: "Bollywood / Horror / Comedy",
-        industry: "bollywood", // Categorizer property
+        genre: "Horror / Comedy",
+        industry: "bollywood", 
         rating: "7.9",
         poster: "https://filmyzilla40.com/site_uploads/duplicate/thumb_Bhooth-bangla-(2026)-hindi-movie.jpg",
         streamUrl: "https://streamimdb.ru/embed/movie/tt29540862",
@@ -24,8 +24,8 @@ const contentDatabase = [
         id: "bastards-of-bollywood",
         title: "The Ba***ds of Bollywood",
         type: "series",
-        genre: "Bollywood / Drama / Crime Thriller",
-        industry: "bollywood", // Categorizer property
+        genre: "Drama / Crime Thriller",
+        industry: "series", 
         rating: "8.4",
         poster: "https://m.media-amazon.com/images/M/MV5BNzZiOTY5ZmYtYjZhYi00M2JjLTg3OTctMjM1OTBiY2ZkM2YwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
         streamUrl: "https://streamimdb.ru/embed/tv/tt34683290",
