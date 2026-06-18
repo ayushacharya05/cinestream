@@ -12,7 +12,8 @@ const contentDatabase = [
         id: "bhooth-bangla-2026",
         title: "Bhooth Bangla (2026)",
         type: "movie",
-        genre: "Horror / Comedy",
+        genre: "Bollywood / Horror / Comedy",
+        industry: "bollywood", // Categorizer property
         rating: "7.9",
         poster: "https://filmyzilla40.com/site_uploads/duplicate/thumb_Bhooth-bangla-(2026)-hindi-movie.jpg",
         streamUrl: "https://streamimdb.ru/embed/movie/tt29540862",
@@ -23,33 +24,12 @@ const contentDatabase = [
         id: "bastards-of-bollywood",
         title: "The Ba***ds of Bollywood",
         type: "series",
-        genre: "Drama / Crime Thriller",
+        genre: "Bollywood / Drama / Crime Thriller",
+        industry: "bollywood", // Categorizer property
         rating: "8.4",
         poster: "https://m.media-amazon.com/images/M/MV5BNzZiOTY5ZmYtYjZhYi00M2JjLTg3OTctMjM1OTBiY2ZkM2YwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
         streamUrl: "https://streamimdb.ru/embed/tv/tt34683290",
         releaseDate: "2026-05-15",
         description: "Dive deep into a captivating, gritty fictionalization exploring the untold high-stakes underbelly of modern entertainment, power structures, and ambition."
-    },
-    {
-        id: "stranger-things-5",
-        title: "Stranger Things (Season 5)",
-        type: "series",
-        genre: "Sci-Fi / Mystery",
-        rating: "9.2",
-        poster: "https://m.media-amazon.com/images/M/MV5BMTEwNDM0MDEzMzVeQTJeQWpwZ15BbWU4MDkyMjQ3MDEx._V1_.jpg",
-        streamUrl: "https://streamimdb.ru/embed/tv/tt5024912",
-        releaseDate: "2026-06-01",
-        description: "The final, epic conclusion to the legendary Hawkins saga as the kids face Vecna one last time to save their world from the Upside Down."
-    },
-    {
-        id: "interstellar",
-        title: "Interstellar",
-        type: "movie",
-        genre: "Sci-Fi / Drama",
-        rating: "8.7",
-        poster: "https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGI1LWE4ODEtYTFkOTkwNDdiMjK1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg",
-        streamUrl: "https://streamimdb.ru/embed/movie/tt0816692",
-        releaseDate: "2014-11-07",
-        description: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival in this masterpiece by Christopher Nolan."
     }
 ];
