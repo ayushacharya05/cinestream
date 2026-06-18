@@ -33,6 +33,18 @@ const contentDatabase = [
         releaseDate: "2026-06-04",
         description: "Rekha and her daughters Jaya and Sushma, controversial figures in their conservative neighborhood, discover a dead body in their kitchen. The struggling, squabbling mother-daughter trio must work together to cover up the crime."
     },
+        {
+        id: "dhurandhar-therevenge-2026",
+        title: "Dhurandhar: The Revenge",
+        type: "movie",
+        genre: "Thriller/Spy",
+        industry: "bollywood", // Maps to Bollywood Hits row
+        rating: "8.3",
+        poster: "https://m.media-amazon.com/images/M/MV5BNDhjNThiMjQtNTc0ZS00MjAxLTgyODItNDFkZjI5YjU0MDJhXkEyXkFqcGc@._V1_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/movie/tt39139925",
+        releaseDate: "2026-03-19",
+        description: "Jaskirat Singh Rangi descends deeper into his alias as Hamza Ali Mazari, rising through Karachi's criminal hierarchy to claim the feared title \"Sher-e-Baloch\" while balancing loyalty, betrayal, and survival in a ruthless underworld."
+    },
 
       {
         id: "dhurandhar",
@@ -45,19 +57,6 @@ const contentDatabase = [
         streamUrl: "https://streamimdb.ru/embed/movie/tt39139925",
         releaseDate: "2026-12-05",
         description: "A mysterious traveler slips into the heart of Karachi's underbelly and rises through its ranks with lethal precision, only to tear the notorious ISI-Underworld nexus apart from within."
-    },
-    
-    {
-        id: "dhurandhar-therevenge-2026",
-        title: "Dhurandhar: The Revenge",
-        type: "movie",
-        genre: "Thriller/Spy",
-        industry: "bollywood", // Maps to Bollywood Hits row
-        rating: "8.3",
-        poster: "https://m.media-amazon.com/images/M/MV5BNDhjNThiMjQtNTc0ZS00MjAxLTgyODItNDFkZjI5YjU0MDJhXkEyXkFqcGc@._V1_.jpg",
-        streamUrl: "https://streamimdb.ru/embed/movie/tt39139925",
-        releaseDate: "2026-03-19",
-        description: "Jaskirat Singh Rangi descends deeper into his alias as Hamza Ali Mazari, rising through Karachi's criminal hierarchy to claim the feared title \"Sher-e-Baloch\" while balancing loyalty, betrayal, and survival in a ruthless underworld."
     },
 
         {
