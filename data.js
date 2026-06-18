@@ -13,7 +13,7 @@ const contentDatabase = [
         title: "Dhurandhar: The Revenge",
         type: "movie",
         genre: "Action / Thriller",
-        industry: "bollywood", // Correctly maps to Bollywood Hits row
+        industry: "bollywood",
         rating: "8.1",
         poster: "https://m.media-amazon.com/images/M/MV5BNDhjNThiMjQtNTc0ZS00MjAxLTgyODItNDFkZjI5YjU0MDJhXkEyXkFqcGc@._V1_.jpg",
         streamUrl: "https://streamimdb.ru/embed/movie/tt39139925",
@@ -25,7 +25,7 @@ const contentDatabase = [
         title: "Bhooth Bangla (2026)",
         type: "movie",
         genre: "Horror / Comedy",
-        industry: "bollywood", // Correctly maps to Bollywood Hits row
+        industry: "bollywood",
         rating: "7.9",
         poster: "https://filmyzilla40.com/site_uploads/duplicate/thumb_Bhooth-bangla-(2026)-hindi-movie.jpg",
         streamUrl: "https://streamimdb.ru/embed/movie/tt29540862",
@@ -37,7 +37,7 @@ const contentDatabase = [
         title: "The Ba***ds of Bollywood",
         type: "series",
         genre: "Drama / Crime Thriller",
-        industry: "series", // Correctly maps to Must-Watch Web Series row
+        industry: "series",
         rating: "8.4",
         poster: "https://m.media-amazon.com/images/M/MV5BNzZiOTY5ZmYtYjZhYi00M2JjLTg3OTctMjM1OTBiY2ZkM2YwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
         streamUrl: "https://streamimdb.ru/embed/tv/tt34683290",
