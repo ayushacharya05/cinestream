@@ -21,6 +21,18 @@ const contentDatabase = [
         releaseDate: "2026-04-10",
         description: "A thrilling upcoming cinematic blend of horror and comedy featuring high-voltage laughter, suspense, and unexpected supernatural twists."
     },
+        {
+        id: "Maa-Behen",
+        title: "Maa Behen",
+        type: "movie",
+        genre: "Thriller/Comedy",
+        industry: "bollywood", // Maps to Bollywood Hits row
+        rating: "5.5",
+        poster: "https://m.media-amazon.com/images/M/MV5BZGZjMGRjN2QtZWM4Ni00NjVjLWFjZjMtMmJmNjg2ZjQ1ZmZmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/movie/tt33538438",
+        releaseDate: "2026-06-04",
+        description: "Rekha and her daughters Jaya and Sushma, controversial figures in their conservative neighborhood, discover a dead body in their kitchen. The struggling, squabbling mother-daughter trio must work together to cover up the crime."
+    },
 
       {
         id: "dhurandhar",
@@ -141,17 +153,32 @@ const contentDatabase = [
 
      /**series*/
     {
-        id: "bastards-of-bollywood",
-        title: "The Ba***ds of Bollywood",
+        id: "Matka-King",
+        title: "Matka King",
         type: "series",
-        genre: "Drama / Crime Thriller",
+        genre: "Drama",
         industry: "series", // Maps to Must-Watch Web Series row
-        rating: "8.4",
-        poster: "https://m.media-amazon.com/images/M/MV5BNzZiOTY5ZmYtYjZhYi00M2JjLTg3OTctMjM1OTBiY2ZkM2YwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
-        streamUrl: "https://streamimdb.ru/embed/tv/tt34683290",
-        releaseDate: "2026-05-15",
-        description: "Dive deep into a captivating, gritty fictionalization exploring the untold high-stakes underbelly of modern entertainment, power structures, and ambition."
+        rating: "7.2",
+        poster: "https://m.media-amazon.com/images/M/MV5BNjg3ZmExNjctNGI3Yi00MWRlLWExYjMtODg5ZmE1Yjc4MTU2XkEyXkFqcGc@._V1_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/tv/tt16997004",
+        releaseDate: "2026-04-17",
+        description: "An enterprising cotton trader in Mumbai starts a new gambling game called Matka, taking the city by storm and democratizing a terrain previously reserved for the rich and elite."
     },
+
+    
+        {
+        id: "taaza-khabar",
+        title: "Taaza Khabar",
+        type: "series",
+        genre: "Thriller",
+        industry: "series", // Maps to Must-Watch Web Series row
+        rating: "8.0",
+        poster: "https://m.media-amazon.com/images/M/MV5BNjAzMDEzZmUtYjgzMy00NTYxLWJlODItYTMyZGI4YzdmZGY4XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/tv/tt22014226",
+        releaseDate: "2023-01-06",
+        description: "A Sanitation worker, how he stumbles upon magical powers which leads to a riveting new ride for the man, and how it stirs his humble life."
+    },
+    
 
         {
         id: "taaza-khabar",
@@ -164,6 +191,18 @@ const contentDatabase = [
         streamUrl: "https://streamimdb.ru/embed/tv/tt22014226",
         releaseDate: "2023-01-06",
         description: "A Sanitation worker, how he stumbles upon magical powers which leads to a riveting new ride for the man, and how it stirs his humble life."
+    },
+        {
+        id: "gullak",
+        title: "Gullak Season 1-5",
+        type: "series",
+        genre: "Family/Comedy/Drama",
+        industry: "series", // Maps to Must-Watch Web Series row
+        rating: "9.1",
+        poster: "https://i.pinimg.com/736x/26/33/50/263350b944e1b0c5151cc9cb95b10b47.jpg",
+        streamUrl: "https://streamimdb.ru/embed/tv/tt10530900",
+        releaseDate: "2019-05-19",
+        description: "Set in quaint by-lanes in the heart of India, Gullak is a collection of disarming and relatable tales of the Mishra family."
     },
          {
         id: "farzi",
