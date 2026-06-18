@@ -20,7 +20,7 @@ const contentDatabase = [
         releaseDate: "2026-04-10",
         description: "A thrilling upcoming cinematic blend of horror and comedy featuring high-voltage laughter, suspense, and unexpected supernatural twists."
     },
-     {
+    {
         id: "dhurandhar-therevenge-2026",
         title: "Dhurandhar: The Revenge",
         type: "movie",
@@ -30,7 +30,8 @@ const contentDatabase = [
         poster: "https://m.media-amazon.com/images/M/MV5BNDhjNThiMjQtNTc0ZS00MjAxLTgyODItNDFkZjI5YjU0MDJhXkEyXkFqcGc@._V1_.jpg",
         streamUrl: "https://streamimdb.ru/embed/movie/tt39139925",
         releaseDate: "2026-03-19",
-        description: "Jaskirat Singh Rangi descends deeper into his alias as Hamza Ali Mazari, rising through Karachi's criminal hierarchy to claim the feared title "Sher-e-Baloch" while balancing loyalty, betrayal, and survival in a ruthless underworld.."
+        // FIXED: Escaped the quotes around "Sher-e-Baloch" using \"
+        description: "Jaskirat Singh Rangi descends deeper into his alias as Hamza Ali Mazari, rising through Karachi's criminal hierarchy to claim the feared title \"Sher-e-Baloch\" while balancing loyalty, betrayal, and survival in a ruthless underworld."
     },
     {
         id: "bastards-of-bollywood",
