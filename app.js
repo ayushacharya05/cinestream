@@ -69,7 +69,7 @@ const contentDatabase = [
         genre: "Drama",
         industry: "hollywood", // Maps to hollywood Hits row
         rating: "6.5",
-        poster: "https://m.media-amazon.com/images/M/MV5BMTgwNDI1ZjctYWNmMS00MTJhLTg1ZWItMzI1Yjk5NjZkYWFkXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+        poster: "https://m.media-amazon.com/images/M/MV5BNzI2YmMxZWItNjlhOS00ODNmLWEzYjQtYWIyNjc0ZTQwOTZlXkEyXkFqcGc@._V1_.jpg",
         streamUrl: "https://streamimdb.ru/embed/movie/tt36958376",
         releaseDate: "2026-07-17",
         description: "A forbidden love story between 18-year-old Noah and stepbrother Nick faces challenges as they pursue different paths - him in business, her at Oxford - while dealing with new relationships and secrets."
