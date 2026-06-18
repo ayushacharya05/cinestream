@@ -179,7 +179,7 @@ const contentDatabase = [
     
         {
         id: "panchayat",
-        title: "Panchayat Season 1-5",
+        title: "Panchayat Season 1-4",
         type: "series",
         genre: "Satire/Drama/Comedy",
         industry: "series", // Maps to Must-Watch Web Series row
