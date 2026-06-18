@@ -287,32 +287,6 @@
             color: white;
             box-shadow: 0 15px 35px var(--accent-glow);
         }
-        
-        /* Carousel Slide Dots Controls */
-        .carousel-dots {
-            position: absolute;
-            bottom: 40px;
-            right: 6%;
-            z-index: 10;
-            display: flex;
-            gap: 12px;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-
-        .dot.active {
-            background: var(--accent-primary);
-            width: 30px;
-            border-radius: var(--radius-pill);
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
 
         /* Horizontal Rows and Slider Views */
         .content-wrap {
@@ -508,6 +482,32 @@
             font-size: 0.8rem;
             color: var(--text-secondary);
             margin-top: 4px;
+        }
+
+        /* Carousel Slide Dots Controls */
+        .carousel-dots {
+            position: absolute;
+            bottom: 40px;
+            right: 6%;
+            z-index: 10;
+            display: flex;
+            gap: 12px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .dot.active {
+            background: var(--accent-primary);
+            width: 30px;
+            border-radius: var(--radius-pill);
+            box-shadow: 0 0 10px var(--accent-glow);
         }
 
         /* Dedicated Details Presentation Overlay Drawer */
@@ -730,10 +730,8 @@
     </header>
 
     <section class="hero-carousel-container" id="hero-carousel-container">
-        <div class="hero-track" id="main-slider-track">
-            </div>
-        <div class="carousel-dots" id="slider-dots-box">
-            </div>
+        <div class="hero-track" id="main-slider-track"></div>
+        <div class="carousel-dots" id="slider-dots-box"></div>
     </section>
 
     <main class="content-wrap">
@@ -799,240 +797,6 @@
         </div>
     </div>
 
-    <script src="data.js"></script>
-    <script>
-        let currentActiveSlideIndex = 0;
-        let dynamicActiveSlides = [];
-        let sliderLoopInterval;
-
-        function initializeStreamingHub() {
-            // Self-protect code in case data.js fails or is missing entirely
-            if (typeof contentDatabase === 'undefined' || contentDatabase.length === 0) {
-                console.error("Database parsing failed. Check your data.js configuration files.");
-                document.getElementById('main-slider-track').innerHTML = '<div style="padding: 100px; text-align: center; color: #94a3b8;">Database failed to initialize.</div>';
-                return;
-            }
-
-            // Sort content by chronological release date to select top header slide banners
-            const sortedByDate = [...contentDatabase].sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
-            dynamicActiveSlides = sortedByDate.slice(0, 3);
-
-            renderHeaderSliderCarousel();
-            renderMediaGridCollections(contentDatabase);
-            setupSearchEngineListener();
-            startAutoSliderLoop();
-        }
-
-        function renderHeaderSliderCarousel() {
-            const track = document.getElementById('main-slider-track');
-            const dotsBox = document.getElementById('slider-dots-box');
-            track.innerHTML = '';
-            dotsBox.innerHTML = '';
-
-            // Calculate precise container sizing depending strictly on how many slides actually exist
-            track.style.width = `${dynamicActiveSlides.length * 100}%`;
-
-            dynamicActiveSlides.forEach((item, index) => {
-                const slide = document.createElement('div');
-                slide.className = 'hero-slide';
-                slide.style.width = `${100 / dynamicActiveSlides.length}%`;
-                slide.style.background = `url('${item.poster}')`;
-                slide.innerHTML = `
-                    <div class="hero-inner">
-                        <div class="badge-row">
-                            <span class="spotlight-badge">FEATURED TITLES</span>
-                            <span class="genre-badge">${item.genre}</span>
-                        </div>
-                        <h1 class="hero-title">${item.title}</h1>
-                        <div class="hero-meta">
-                            <span class="rating-star">★ ${item.rating} IMDb</span>
-                            <span>•</span>
-                            <span>Released: ${item.releaseDate}</span>
-                        </div>
-                        <p class="hero-description">${item.description || ''}</p>
-                        <button class="btn-stream" onclick="openDetailsPanel('${item.id}')">
-                            View Details
-                        </button>
-                    </div>
-                `;
-                track.appendChild(slide);
-
-                const dot = document.createElement('span');
-                dot.className = `dot ${index === 0 ? 'active' : ''}`;
-                dot.onclick = () => {
-                    clearInterval(sliderLoopInterval);
-                    switchSlide(index);
-                    startAutoSliderLoop();
-                };
-                dotsBox.appendChild(dot);
-            });
-        }
-
-        function switchSlide(index) {
-            if (dynamicActiveSlides.length <= 1) return;
-            currentActiveSlideIndex = index;
-            const track = document.getElementById('main-slider-track');
-            const movementPercent = index * (100 / dynamicActiveSlides.length);
-            track.style.transform = `translateX(-${movementPercent}%)`;
-            
-            document.querySelectorAll('#slider-dots-box .dot').forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-            });
-        }
-
-        function startAutoSliderLoop() {
-            if (dynamicActiveSlides.length <= 1) return;
-            sliderLoopInterval = setInterval(() => {
-                let nextSlide = (currentActiveSlideIndex + 1) % dynamicActiveSlides.length;
-                switchSlide(nextSlide);
-            }, 6000);
-        }
-
-        function scrollToSection(targetId, elementPointer) {
-            const targetElement = document.getElementById(targetId);
-            if (!targetElement) return;
-
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            elementPointer.classList.add('active');
-
-            const navbarOffset = document.getElementById('app-navigation').offsetHeight + 20;
-            const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - navbarOffset;
-
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
-        }
-
-        function renderMediaGridCollections(dataset) {
-            const bollywoodGrid = document.getElementById('bollywood-render-grid');
-            const hollywoodGrid = document.getElementById('hollywood-render-grid');
-            const seriesGrid = document.getElementById('series-render-grid');
-
-            bollywoodGrid.innerHTML = ''; 
-            hollywoodGrid.innerHTML = '';
-            seriesGrid.innerHTML = '';
-
-            let counts = { bollywood: 0, hollywood: 0, series: 0 };
-
-            dataset.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'media-card';
-                card.innerHTML = `
-                    <div class="poster-wrapper">
-                        <img src="${item.poster}" alt="${item.title}" loading="lazy">
-                        <div class="card-dark-overlay">
-                            <div class="info-circle-btn">View Details</div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-info-header">
-                            <span class="type-tag">${item.type}</span>
-                            <span class="card-rating">★ ${item.rating}</span>
-                        </div>
-                        <h3 class="card-title">${item.title}</h3>
-                        <span class="card-genre">${item.genre}</span>
-                    </div>
-                `;
-                
-                card.addEventListener('click', () => openDetailsPanel(item.id));
-
-                if (item.industry === 'bollywood') {
-                    bollywoodGrid.appendChild(card);
-                    counts.bollywood++;
-                } else if (item.industry === 'hollywood') {
-                    hollywoodGrid.appendChild(card);
-                    counts.hollywood++;
-                } else if (item.industry === 'series') {
-                    seriesGrid.appendChild(card);
-                    counts.series++;
-                }
-            });
-
-            // Prevent engine crashes if any rails are empty
-            if(counts.bollywood === 0) bollywoodGrid.innerHTML = '<div class="empty-placeholder-msg">More Bollywood additions coming soon.</div>';
-            if(counts.hollywood === 0) hollywoodGrid.innerHTML = '<div class="empty-placeholder-msg">More Hollywood additions coming soon.</div>';
-            if(counts.series === 0) seriesGrid.innerHTML = '<div class="empty-placeholder-msg">More Series additions coming soon.</div>';
-        }
-
-        function openDetailsPanel(itemId) {
-            const item = contentDatabase.find(i => i.id === itemId);
-            if (!item) return;
-
-            document.getElementById('panel-banner-target').style.background = `url('${item.poster}')`;
-            document.getElementById('panel-title-target').innerText = item.title;
-            document.getElementById('panel-rating-target').innerText = `★ ${item.rating} IMDb`;
-            document.getElementById('panel-type-target').innerText = item.type.toUpperCase();
-            document.getElementById('panel-genre-target').innerText = item.genre;
-            document.getElementById('panel-desc-target').innerText = item.description || 'No summary text available.';
-            
-            const streamBtn = document.getElementById('panel-play-trigger');
-            streamBtn.onclick = () => {
-                closeDetailsPanel();
-                openCinemaScreen(item.streamUrl);
-            };
-
-            const overlay = document.getElementById('global-details-panel');
-            overlay.style.display = 'flex';
-            setTimeout(() => overlay.classList.add('active'), 10);
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeDetailsPanel() {
-            const overlay = document.getElementById('global-details-panel');
-            overlay.classList.remove('active');
-            setTimeout(() => overlay.style.display = 'none', 400);
-            document.body.style.overflow = '';
-        }
-
-        const playerOverlay = document.getElementById('global-player-overlay');
-        const embeddedFrame = document.getElementById('cinema-frame-element');
-
-        function openCinemaScreen(url) {
-            embeddedFrame.src = url;
-            playerOverlay.style.display = 'flex';
-            playerOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeCinemaScreen() {
-            playerOverlay.classList.remove('active');
-            playerOverlay.style.display = 'none';
-            embeddedFrame.src = '';
-            document.body.style.overflow = '';
-        }
-
-        function scrollCarousel(viewportId, direction) {
-            document.getElementById(viewportId).scrollBy({ left: 450 * direction, behavior: 'smooth' });
-        }
-
-        function setupSearchEngineListener() {
-            document.getElementById('live-search').addEventListener('input', (e) => {
-                const searchStr = e.target.value.toLowerCase().trim();
-                const filtered = contentDatabase.filter(item => 
-                    item.title.toLowerCase().includes(searchStr) || 
-                    item.genre.toLowerCase().includes(searchStr)
-                );
-                renderMediaGridCollections(filtered);
-            });
-        }
-
-        function resetFilters(e) {
-            e.preventDefault();
-            document.getElementById('live-search').value = '';
-            renderMediaGridCollections(contentDatabase);
-            scrollToSection('hero-carousel-container', document.querySelector('.category-tabs .tab-btn'));
-        }
-
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('app-navigation');
-            if (window.scrollY > 30) navbar.classList.add('scrolled');
-            else navbar.classList.remove('scrolled');
-        });
-
-        // Safe operational bootstrap listener execution
-        document.addEventListener('DOMContentLoaded', initializeStreamingHub);
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
