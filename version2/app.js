@@ -8,6 +8,7 @@
  */
 
 const contentDatabase = [
+    /**bollywood*/
     {
         id: "bhooth-bangla-2026",
         title: "Bhooth Bangla (2026)",
@@ -20,18 +21,7 @@ const contentDatabase = [
         releaseDate: "2026-04-10",
         description: "A thrilling upcoming cinematic blend of horror and comedy featuring high-voltage laughter, suspense, and unexpected supernatural twists."
     },
-        {
-        id: "bhooth-bangla-2026",
-        title: "ohooth Bangla (2026)",
-        type: "movie",
-        genre: "Horror / Comedy",
-        industry: "hollywood", // Maps to Bollywood Hits row
-        rating: "7.9",
-        poster: "https://filmyzilla40.com/site_uploads/duplicate/thumb_Bhooth-bangla-(2026)-hindi-movie.jpg",
-        streamUrl: "https://streamimdb.ru/embed/movie/tt29540862",
-        releaseDate: "2026-04-10",
-        description: "A thrilling upcoming cinematic blend of horror and comedy featuring high-voltage laughter, suspense, and unexpected supernatural twists."
-    },
+    
     {
         id: "dhurandhar-therevenge-2026",
         title: "Dhurandhar: The Revenge",
@@ -44,6 +34,23 @@ const contentDatabase = [
         releaseDate: "2026-03-19",
         description: "Jaskirat Singh Rangi descends deeper into his alias as Hamza Ali Mazari, rising through Karachi's criminal hierarchy to claim the feared title \"Sher-e-Baloch\" while balancing loyalty, betrayal, and survival in a ruthless underworld."
     },
+    
+ /**hollywood*/
+
+        {
+        id: "bhooth-bangla-2026",
+        title: "Disclosure Day",
+        type: "movie",
+        genre: "Sci-Fi Epic",
+        industry: "hollywood", // Maps to hollywood Hits row
+        rating: "6.8",
+        poster: "https://m.media-amazon.com/images/M/MV5BMTgwNDI1ZjctYWNmMS00MTJhLTg1ZWItMzI1Yjk5NjZkYWFkXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/movie/tt15047880",
+        releaseDate: "2026-06-12",
+        description: "If you found out we weren't alone, if someone showed you, proved it to you, would that frighten you?"
+    },
+
+     /**series*/
     {
         id: "bastards-of-bollywood",
         title: "The Ba***ds of Bollywood",
