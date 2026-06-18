@@ -21,6 +21,19 @@ const contentDatabase = [
         releaseDate: "2026-04-10",
         description: "A thrilling upcoming cinematic blend of horror and comedy featuring high-voltage laughter, suspense, and unexpected supernatural twists."
     },
+
+      {
+        id: "dhurandhar",
+        title: "Dhurandhar",
+        type: "movie",
+        genre: "Thriller/Spy",
+        industry: "bollywood", // Maps to Bollywood Hits row
+        rating: "8.3",
+        poster: "https://m.media-amazon.com/images/M/MV5BNDhjNThiMjQtNTc0ZS00MjAxLTgyODItNDFkZjI5YjU0MDJhXkEyXkFqcGc@._V1_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/movie/tt39139925",
+        releaseDate: "2026-12-05",
+        description: "A mysterious traveler slips into the heart of Karachi's underbelly and rises through its ranks with lethal precision, only to tear the notorious ISI-Underworld nexus apart from within."
+    },
     
     {
         id: "dhurandhar-therevenge-2026",
@@ -73,6 +86,31 @@ const contentDatabase = [
         poster: "https://m.media-amazon.com/images/M/MV5BNzZiOTY5ZmYtYjZhYi00M2JjLTg3OTctMjM1OTBiY2ZkM2YwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
         streamUrl: "https://streamimdb.ru/embed/tv/tt34683290",
         releaseDate: "2026-05-15",
+        description: "Dive deep into a captivating, gritty fictionalization exploring the untold high-stakes underbelly of modern entertainment, power structures, and ambition."
+    },
+
+        {
+        id: "taaza-khabar",
+        title: "Taaza Khabar",
+        type: "series",
+        genre: "Thriller",
+        industry: "series", // Maps to Must-Watch Web Series row
+        rating: "8.0",
+        poster: "https://m.media-amazon.com/images/M/MV5BNjAzMDEzZmUtYjgzMy00NTYxLWJlODItYTMyZGI4YzdmZGY4XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/tv/tt22014226",
+        releaseDate: "2023-01-06",
+        description: "A Sanitation worker, how he stumbles upon magical powers which leads to a riveting new ride for the man, and how it stirs his humble life."
+    }
+         {
+        id: "farzi",
+        title: "Farzi",
+        type: "series",
+        genre: "Thriller",
+        industry: "series", // Maps to Must-Watch Web Series row
+        rating: "8.4",
+        poster: "https://m.media-amazon.com/images/M/MV5BNDY2OWMxNzgtZGQ4Ny00ODI3LTk3MTAtYjM4N2U4ZGI3ZGY1XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/tv/tt15477488",
+        releaseDate: "2023-02-05",
         description: "Dive deep into a captivating, gritty fictionalization exploring the untold high-stakes underbelly of modern entertainment, power structures, and ambition."
     }
 ];
