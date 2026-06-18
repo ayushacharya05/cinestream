@@ -34,7 +34,19 @@ const contentDatabase = [
         releaseDate: "2026-03-19",
         description: "Jaskirat Singh Rangi descends deeper into his alias as Hamza Ali Mazari, rising through Karachi's criminal hierarchy to claim the feared title \"Sher-e-Baloch\" while balancing loyalty, betrayal, and survival in a ruthless underworld."
     },
-    
+
+        {
+        id: "saiyara",
+        title: "Saiyaara",
+        type: "movie",
+        genre: "Romance",
+        industry: "bollywood", // Maps to Bollywood Hits row
+        rating: "6.3",
+        poster: "https://m.media-amazon.com/images/M/MV5BMTk2ZmFhYjctYWZiYy00N2IxLWEzMWItZGRiMDY4ZDQwZWFlXkEyXkFqcGc@._V1_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/movie/tt28037987",
+        releaseDate: "2025-07-18",
+        description: "Heartbroken after being ditched at the altar, Vaani meets angry, struggling musician Krish. Her poetry ignites his songs and their passionate love. But as fame rises, her fading memories threaten to erase everything."
+    },
  /**hollywood*/
 
         {
