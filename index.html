@@ -8,12 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <script src="data.js"></script>
-<script>
-    let currentActiveSlideIndex = 0;
-    // ... rest of your javascript execution engine ...
-</script>
     
     <style>
         /* Modern Design System Architecture Tokens */
@@ -812,9 +806,14 @@
         let sliderLoopInterval;
 
         function initializeStreamingHub() {
-            if (typeof contentDatabase === 'undefined' || contentDatabase.length === 0) return;
+            // Self-protect code in case data.js fails or is missing entirely
+            if (typeof contentDatabase === 'undefined' || contentDatabase.length === 0) {
+                console.error("Database parsing failed. Check your data.js configuration files.");
+                document.getElementById('main-slider-track').innerHTML = '<div style="padding: 100px; text-align: center; color: #94a3b8;">Database failed to initialize.</div>';
+                return;
+            }
 
-            // Sort arrays to parse active titles for hero sliders
+            // Sort content by chronological release date to select top header slide banners
             const sortedByDate = [...contentDatabase].sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
             dynamicActiveSlides = sortedByDate.slice(0, 3);
 
@@ -830,7 +829,7 @@
             track.innerHTML = '';
             dotsBox.innerHTML = '';
 
-            // Dynamic calculation adjustments mapping the percentage metrics to exactly what exists
+            // Calculate precise container sizing depending strictly on how many slides actually exist
             track.style.width = `${dynamicActiveSlides.length * 100}%`;
 
             dynamicActiveSlides.forEach((item, index) => {
@@ -951,6 +950,7 @@
                 }
             });
 
+            // Prevent engine crashes if any rails are empty
             if(counts.bollywood === 0) bollywoodGrid.innerHTML = '<div class="empty-placeholder-msg">More Bollywood additions coming soon.</div>';
             if(counts.hollywood === 0) hollywoodGrid.innerHTML = '<div class="empty-placeholder-msg">More Hollywood additions coming soon.</div>';
             if(counts.series === 0) seriesGrid.innerHTML = '<div class="empty-placeholder-msg">More Series additions coming soon.</div>';
@@ -1031,6 +1031,7 @@
             else navbar.classList.remove('scrolled');
         });
 
+        // Safe operational bootstrap listener execution
         document.addEventListener('DOMContentLoaded', initializeStreamingHub);
     </script>
 </body>
