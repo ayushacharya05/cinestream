@@ -41,7 +41,7 @@ const contentDatabase = [
         genre: "Thriller/Spy",
         industry: "bollywood", // Maps to Bollywood Hits row
         rating: "8.3",
-        poster: "https://m.media-amazon.com/images/M/MV5BNDhjNThiMjQtNTc0ZS00MjAxLTgyODItNDFkZjI5YjU0MDJhXkEyXkFqcGc@._V1_.jpg",
+        poster: "https://m.media-amazon.com/images/M/MV5BMzJhMzQ0MGItMWIxOC00NzkwLWJkNDktYjgyZGMwN2U2ZDEwXkEyXkFqcGc@._V1_.jpg",
         streamUrl: "https://streamimdb.ru/embed/movie/tt39139925",
         releaseDate: "2026-12-05",
         description: "A mysterious traveler slips into the heart of Karachi's underbelly and rises through its ranks with lethal precision, only to tear the notorious ISI-Underworld nexus apart from within."
