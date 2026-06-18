@@ -164,35 +164,7 @@ const contentDatabase = [
         releaseDate: "2026-04-17",
         description: "An enterprising cotton trader in Mumbai starts a new gambling game called Matka, taking the city by storm and democratizing a terrain previously reserved for the rich and elite."
     },
-
-    
-        {
-        id: "taaza-khabar",
-        title: "Taaza Khabar",
-        type: "series",
-        genre: "Thriller",
-        industry: "series", // Maps to Must-Watch Web Series row
-        rating: "8.0",
-        poster: "https://m.media-amazon.com/images/M/MV5BNjAzMDEzZmUtYjgzMy00NTYxLWJlODItYTMyZGI4YzdmZGY4XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
-        streamUrl: "https://streamimdb.ru/embed/tv/tt22014226",
-        releaseDate: "2023-01-06",
-        description: "A Sanitation worker, how he stumbles upon magical powers which leads to a riveting new ride for the man, and how it stirs his humble life."
-    },
-    
-
-        {
-        id: "taaza-khabar",
-        title: "Taaza Khabar",
-        type: "series",
-        genre: "Thriller",
-        industry: "series", // Maps to Must-Watch Web Series row
-        rating: "8.0",
-        poster: "https://m.media-amazon.com/images/M/MV5BNjAzMDEzZmUtYjgzMy00NTYxLWJlODItYTMyZGI4YzdmZGY4XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
-        streamUrl: "https://streamimdb.ru/embed/tv/tt22014226",
-        releaseDate: "2023-01-06",
-        description: "A Sanitation worker, how he stumbles upon magical powers which leads to a riveting new ride for the man, and how it stirs his humble life."
-    },
-        {
+  {
         id: "gullak",
         title: "Gullak Season 1-5",
         type: "series",
@@ -204,6 +176,34 @@ const contentDatabase = [
         releaseDate: "2019-05-19",
         description: "Set in quaint by-lanes in the heart of India, Gullak is a collection of disarming and relatable tales of the Mishra family."
     },
+    
+        {
+        id: "panchayat",
+        title: "Panchayat Season 1-5",
+        type: "series",
+        genre: "Satire/Drama/Comedy",
+        industry: "series", // Maps to Must-Watch Web Series row
+        rating: "9.0",
+        poster: "https://m.media-amazon.com/images/M/MV5BNjMwYWMxNjYtY2I2NC00OWE0LTg4MmQtMmI5ZGI2NzU4ODhiXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/tv/tt12004706",
+        releaseDate: "2020-06-24",
+        description: "A comedy-drama, which captures the journey of an engineering graduate Abhishek, who for lack of a better job option joins as secretary of a Panchayat office in a remote village of Uttar Pradesh."
+    },
+    
+
+        {
+        id: "taaza-khabar",
+        title: "Taaza Khabar",
+        type: "series",
+        genre: "Thriller",
+        industry: "series", // Maps to Must-Watch Web Series row
+        rating: "8.0",
+        poster: "https://m.media-amazon.com/images/M/MV5BNjAzMDEzZmUtYjgzMy00NTYxLWJlODItYTMyZGI4YzdmZGY4XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/tv/tt22014226",
+        releaseDate: "2023-01-06",
+        description: "A Sanitation worker, how he stumbles upon magical powers which leads to a riveting new ride for the man, and how it stirs his humble life."
+    },
+      
          {
         id: "farzi",
         title: "Farzi",
