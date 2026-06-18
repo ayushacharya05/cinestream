@@ -100,7 +100,7 @@ const contentDatabase = [
         streamUrl: "https://streamimdb.ru/embed/tv/tt22014226",
         releaseDate: "2023-01-06",
         description: "A Sanitation worker, how he stumbles upon magical powers which leads to a riveting new ride for the man, and how it stirs his humble life."
-    }
+    },
          {
         id: "farzi",
         title: "Farzi",
