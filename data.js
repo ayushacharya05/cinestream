@@ -1,10 +1,10 @@
 /**
  * CineStream Production CMS Database File
- * * INSTRUCTIONS TO ADD NEW MOVIES OR SERIES:
- * 1. Copy an existing block (from { down to },)
- * 2. Paste it right below inside the array.
- * 3. Change the properties: id, title, type (either "movie" or "series"), genre, rating, poster, streamUrl, and description.
- * 4. Save this file. The website updates instantly!
+ * * INSTRUCTIONS TO ADD NEW CONTENT:
+ * 1. Copy an entire object block (from { down to },).
+ * 2. Paste it inside the contentDatabase array.
+ * 3. Update the properties. Ensure 'releaseDate' uses the YYYY-MM-DD format 
+ * so the engine can automatically select the newest titles for the header slides.
  */
 
 const contentDatabase = [
@@ -16,6 +16,7 @@ const contentDatabase = [
         rating: "7.9",
         poster: "https://filmyzilla40.com/site_uploads/duplicate/thumb_Bhooth-bangla-(2026)-hindi-movie.jpg",
         streamUrl: "https://streamimdb.ru/embed/movie/tt29540862",
+        releaseDate: "2026-04-10",
         description: "A thrilling upcoming cinematic blend of horror and comedy featuring high-voltage laughter, suspense, and unexpected supernatural twists."
     },
     {
@@ -26,6 +27,29 @@ const contentDatabase = [
         rating: "8.4",
         poster: "https://m.media-amazon.com/images/M/MV5BNzZiOTY5ZmYtYjZhYi00M2JjLTg3OTctMjM1OTBiY2ZkM2YwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
         streamUrl: "https://streamimdb.ru/embed/tv/tt34683290",
+        releaseDate: "2026-05-15",
         description: "Dive deep into a captivating, gritty fictionalization exploring the untold high-stakes underbelly of modern entertainment, power structures, and ambition."
+    },
+    {
+        id: "stranger-things-5",
+        title: "Stranger Things (Season 5)",
+        type: "series",
+        genre: "Sci-Fi / Mystery",
+        rating: "9.2",
+        poster: "https://m.media-amazon.com/images/M/MV5BMTEwNDM0MDEzMzVeQTJeQWpwZ15BbWU4MDkyMjQ3MDEx._V1_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/tv/tt5024912",
+        releaseDate: "2026-06-01",
+        description: "The final, epic conclusion to the legendary Hawkins saga as the kids face Vecna one last time to save their world from the Upside Down."
+    },
+    {
+        id: "interstellar",
+        title: "Interstellar",
+        type: "movie",
+        genre: "Sci-Fi / Drama",
+        rating: "8.7",
+        poster: "https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGI1LWE4ODEtYTFkOTkwNDdiMjK1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/movie/tt0816692",
+        releaseDate: "2014-11-07",
+        description: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival in this masterpiece by Christopher Nolan."
     }
 ];
