@@ -20,6 +20,18 @@ const contentDatabase = [
         releaseDate: "2026-04-10",
         description: "A thrilling upcoming cinematic blend of horror and comedy featuring high-voltage laughter, suspense, and unexpected supernatural twists."
     },
+        {
+        id: "bhooth-bangla-2026",
+        title: "ohooth Bangla (2026)",
+        type: "movie",
+        genre: "Horror / Comedy",
+        industry: "bollywood", // Maps to Bollywood Hits row
+        rating: "7.9",
+        poster: "https://filmyzilla40.com/site_uploads/duplicate/thumb_Bhooth-bangla-(2026)-hindi-movie.jpg",
+        streamUrl: "https://streamimdb.ru/embed/movie/tt29540862",
+        releaseDate: "2026-04-10",
+        description: "A thrilling upcoming cinematic blend of horror and comedy featuring high-voltage laughter, suspense, and unexpected supernatural twists."
+    },
     {
         id: "dhurandhar-therevenge-2026",
         title: "Dhurandhar: The Revenge",
