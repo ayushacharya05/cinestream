@@ -25,7 +25,7 @@ const contentDatabase = [
         title: "ohooth Bangla (2026)",
         type: "movie",
         genre: "Horror / Comedy",
-        industry: "bollywood", // Maps to Bollywood Hits row
+        industry: "hollywood", // Maps to Bollywood Hits row
         rating: "7.9",
         poster: "https://filmyzilla40.com/site_uploads/duplicate/thumb_Bhooth-bangla-(2026)-hindi-movie.jpg",
         streamUrl: "https://streamimdb.ru/embed/movie/tt29540862",
