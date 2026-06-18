@@ -38,7 +38,7 @@ const contentDatabase = [
  /**hollywood*/
 
         {
-        id: "bhooth-bangla-2026",
+        id: "disclosure-day",
         title: "Disclosure Day",
         type: "movie",
         genre: "Sci-Fi Epic",
