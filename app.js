@@ -66,7 +66,7 @@ const contentDatabase = [
         rating: "5.2",
         poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtlBBJrvGWNZ81aGY0g6KQPa9_qPyAnemfjTlp621a4g&s=10",
         streamUrl: "https://streamimdb.ru/embed/movie/tt31969779",
-        releaseDate: "2025-12-05",
+        releaseDate: "2026-2-13",
         description: "In post-independence Mumbai, the underworld rises amidst a changing city. This gritty tale explores the criminal landscape of a bygone era, weaving through the streets and shadows of India's bustling metropolis."
     },
     {
