@@ -54,8 +54,20 @@ const contentDatabase = [
         rating: "8.3",
         poster: "https://m.media-amazon.com/images/M/MV5BMzJhMzQ0MGItMWIxOC00NzkwLWJkNDktYjgyZGMwN2U2ZDEwXkEyXkFqcGc@._V1_.jpg",
         streamUrl: "https://streamimdb.ru/embed/movie/tt39139925",
-        releaseDate: "2026-12-05",
+        releaseDate: "2025-12-05",
         description: "A mysterious traveler slips into the heart of Karachi's underbelly and rises through its ranks with lethal precision, only to tear the notorious ISI-Underworld nexus apart from within."
+    },
+        {
+        id: "O-Romeo",
+        title: "O' Romeo",
+        type: "movie",
+        genre: "Thriller",
+        industry: "bollywood", // Maps to Bollywood Hits row
+        rating: "5.2",
+        poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtlBBJrvGWNZ81aGY0g6KQPa9_qPyAnemfjTlp621a4g&s=10",
+        streamUrl: "https://streamimdb.ru/embed/movie/tt31969779",
+        releaseDate: "2025-12-05",
+        description: "In post-independence Mumbai, the underworld rises amidst a changing city. This gritty tale explores the criminal landscape of a bygone era, weaving through the streets and shadows of India's bustling metropolis."
     },
     {
         id: "Raid 2",
