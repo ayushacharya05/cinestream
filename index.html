@@ -571,7 +571,7 @@
             background: #ff121d;
         }
 
-        /* NEW ADDED LAYER: Dedicated Full-Screen Category View Grid Architecture */
+        /* Dedicated Full-Screen Category View Grid Architecture */
         .category-modal-overlay {
             position: fixed;
             inset: 0;
@@ -744,7 +744,6 @@
                 padding: 6px 14px;
                 font-size: 0.8rem;
             }
-            /* Highly Enhanced Custom Mobile Search Input */
             .search-container {
                 position: relative;
             }
@@ -829,7 +828,6 @@
                 padding: 8px 10px;
                 font-size: 0.75rem;
             }
-            /* Premium Full-Width Mobile-Optimized Search Field */
             .search-container {
                 width: 100%;
             }
@@ -993,12 +991,11 @@
 
     <script src="app.js"></script>
     <script>
-        /* ROUTING ENGINE LAYER: Handles dynamic browser navigation via History API */
+        /* HISTORY ROUTING NAVIGATION LAYER ENGINE */
         let trackingCategoryToken = "home";
         let trackedItemsCounter = 0;
         const paginationThreshold = 8; 
 
-        // Overrides button interaction logic to synchronize with pushState requests
         function navigateActiveTab(categoryKey, activeBtn) {
             if (categoryKey === trackingCategoryToken) return;
 
@@ -1011,11 +1008,9 @@
             }
         }
 
-        // Central visual display routing function
         function executeRenderWorkflow(categoryKey) {
             trackingCategoryToken = categoryKey;
             
-            // Sync tab UI visual indicators
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 if(btn.getAttribute('data-category') === categoryKey) {
                     btn.classList.add('active');
@@ -1051,9 +1046,12 @@
         function hideCategoryOverlayDOM() {
             document.getElementById('global-category-overlay').classList.remove('active');
             document.body.style.overflow = "";
+
+            const originalTabs = document.querySelectorAll('.tab-btn');
+            originalTabs.forEach(btn => btn.classList.remove('active'));
+            if (originalTabs[0]) originalTabs[0].classList.add('active');
         }
 
-        // Trigger wrapper for structural 'Back to Home' buttons
         function handleBackToHomeAction() {
             history.pushState({ category: 'home' }, "", window.location.pathname);
             executeRenderWorkflow('home');
@@ -1071,6 +1069,8 @@
             }
 
             const rawSourceCards = Array.from(targetRowSource.querySelectorAll('.media-card'));
+            const totalSourceCount = rawSourceCards.length;
+
             const batchLimitIndex = trackedItemsCounter + paginationThreshold;
             const itemsToPopulate = rawSourceCards.slice(trackedItemsCounter, batchLimitIndex);
 
@@ -1089,7 +1089,20 @@
             });
 
             trackedItemsCounter += itemsToPopulate.length;
-            actionsBox.style.display = (trackedItemsCounter >= rawSourceCards.length) ? "none" : "flex";
+
+            /* FIX: Centering layout items if they don't fill up grid rows */
+            if (totalSourceCount < 4) {
+                targetGrid.style.justifyContent = "center";
+            } else {
+                targetGrid.style.justifyContent = "start";
+            }
+
+            /* FIX: Strict button visibility logical bounds check */
+            if (trackedItemsCounter >= totalSourceCount || totalSourceCount <= paginationThreshold) {
+                actionsBox.style.display = "none";
+            } else {
+                actionsBox.style.display = "flex";
+            }
         }
 
         function loadNextCategoryBatch() {
@@ -1101,23 +1114,21 @@
             handleBackToHomeAction();
         }
 
-        // History POPSTATE listener detects when browser back/forward keys are fired
+        /* Popstate synchronization router */
         window.addEventListener('popstate', (event) => {
             if (event.state && event.state.category) {
                 executeRenderWorkflow(event.state.category);
             } else {
-                // Default fallback tracking for base index load
                 executeRenderWorkflow('home');
             }
         });
 
-        // Document Initializer checking deep query routing parameters on direct hit loads
+        /* Deep-linking checking routing layers */
         window.addEventListener('DOMContentLoaded', () => {
             const urlSearchParameters = new URLSearchParams(window.location.search);
             const routeDestination = urlSearchParameters.get('category');
             
             if (routeDestination && ['bollywood', 'hollywood', 'series'].includes(routeDestination)) {
-                // Initialize initial page baseline state for history control arrays
                 history.replaceState({ category: 'home' }, "", window.location.pathname);
                 history.pushState({ category: routeDestination }, "", `?category=${routeDestination}`);
                 executeRenderWorkflow(routeDestination);
