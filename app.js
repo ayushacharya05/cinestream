@@ -102,7 +102,7 @@ const contentDatabase = [
         id: "Jolly-LLB-3",
         title: "Jolly LLB 3",
         type: "movie",
-        genre: "Thriller",
+        genre: "Comedy",
         industry: "bollywood", // Maps to Bollywood Hits row
         rating: "6.4",
         poster: "https://m.media-amazon.com/images/M/MV5BMDQ3OTFkNzUtYjM4OC00ZGFlLTliZTEtMTNiY2U2YzVkNDg3XkEyXkFqcGc@._V1_.jpg",
