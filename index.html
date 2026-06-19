@@ -898,10 +898,10 @@
         <a href="#" class="logo" onclick="resetFilters(event)">Cine<span>Stream</span></a>
         <div class="nav-controls">
             <div class="category-tabs">
-                <button class="tab-btn active" data-category="home" onclick="navigateActiveTab('home', this)">Home</button>
-                <button class="tab-btn" data-category="bollywood" onclick="navigateActiveTab('bollywood', this)">Bollywood</button>
-                <button class="tab-btn" data-category="hollywood" onclick="navigateActiveTab('hollywood', this)">Hollywood</button>
-                <button class="tab-btn" data-category="series" onclick="navigateActiveTab('series', this)">Series</button>
+                <button class="tab-btn active" onclick="navigateActiveTab('home', this)">Home</button>
+                <button class="tab-btn" onclick="navigateActiveTab('bollywood', this)">Bollywood</button>
+                <button class="tab-btn" onclick="navigateActiveTab('hollywood', this)">Hollywood</button>
+                <button class="tab-btn" onclick="navigateActiveTab('series', this)">Series</button>
             </div>
             <div class="search-container">
                 <input type="text" id="live-search" placeholder="Quick search...">
@@ -920,7 +920,8 @@
             <div class="row-header">
                 <h2 class="row-title">Bollywood Hits</h2>
                 <div class="carousel-arrows">
-                    <button class="arrow-btn" onclick="scrollCarousel('bollywood-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>                    <button class="arrow-btn" onclick="scrollCarousel('bollywood-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+                    <button class="arrow-btn" onclick="scrollCarousel('bollywood-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+                    <button class="arrow-btn" onclick="scrollCarousel('bollywood-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
                 </div>
             </div>
             <div class="carousel-viewport" id="bollywood-render-grid"></div>
@@ -930,7 +931,8 @@
             <div class="row-header">
                 <h2 class="row-title">Hollywood Blockbusters</h2>
                 <div class="carousel-arrows">
-                    <button class="arrow-btn" onclick="scrollCarousel('hollywood-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>                    <button class="arrow-btn" onclick="scrollCarousel('hollywood-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+                    <button class="arrow-btn" onclick="scrollCarousel('hollywood-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+                    <button class="arrow-btn" onclick="scrollCarousel('hollywood-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
                 </div>
             </div>
             <div class="carousel-viewport" id="hollywood-render-grid"></div>
@@ -940,7 +942,8 @@
             <div class="row-header">
                 <h2 class="row-title">Must-Watch Web Series</h2>
                 <div class="carousel-arrows">
-                    <button class="arrow-btn" onclick="scrollCarousel('series-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>                    <button class="arrow-btn" onclick="scrollCarousel('series-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+                    <button class="arrow-btn" onclick="scrollCarousel('series-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+                    <button class="arrow-btn" onclick="scrollCarousel('series-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
                 </div>
             </div>
             <div class="carousel-viewport" id="series-render-grid"></div>
@@ -988,12 +991,13 @@
 
     <script src="app.js"></script>
     <script>
-        /* SECURE LINEAR NAVIGATION ENGINE WITH RACE CONDITION GUARDS */
+        /* FEATURE LAYER SCRIPT: Connects dynamic views perfectly with strict History API routing */
         let trackingCategoryToken = "home";
         let trackedItemsCounter = 0;
         const paginationThreshold = 8; 
 
-        let historyStateStack = ['home']; 
+        // State Machine Tracking Array
+        let historyStateStack = ['home'];
         let internalNavigationFlag = false;
 
         function navigateActiveTab(categoryKey, activeBtn) {
@@ -1003,8 +1007,8 @@
 
         function pushNavigationState(newStateToken) {
             internalNavigationFlag = true;
-            
             let dynamicUrl = window.location.pathname;
+            
             if (newStateToken !== 'home' && ['bollywood', 'hollywood', 'series'].includes(newStateToken)) {
                 dynamicUrl = `?category=${newStateToken}`;
             }
@@ -1015,6 +1019,7 @@
             internalNavigationFlag = false;
         }
 
+        // Helper allows UI elements to uniformly trigger browser backward actions cleanly
         function triggerStepBack() {
             if (historyStateStack.length > 1) {
                 history.back();
@@ -1022,19 +1027,17 @@
         }
 
         function applyActiveViewState(viewToken) {
-            // CRITICAL STEP: Reset view tokens only if navigating backward to home or a strict clean category
-            if (viewToken === 'home' || ['bollywood', 'hollywood', 'series'].includes(viewToken)) {
-                document.getElementById('global-category-overlay').classList.remove('active');
-                if (window.closeDetailsPanel) window.closeDetailsPanel();
-                if (window.closeCinemaScreen) window.closeCinemaScreen();
-                document.body.style.overflow = "";
-            }
+            // Drop overlay panels unconditionally before evaluating state transitions
+            document.getElementById('global-category-overlay').classList.remove('active');
+            if (window.closeDetailsPanel) window.closeDetailsPanel();
+            if (window.closeCinemaScreen) window.closeCinemaScreen();
+            document.body.style.overflow = "";
 
             if (viewToken === 'home') {
                 trackingCategoryToken = 'home';
                 document.querySelectorAll('.tab-btn').forEach(btn => {
                     btn.classList.remove('active');
-                    if(btn.getAttribute('data-category') === 'home') btn.classList.add('active');
+                    if (btn.textContent.trim().toLowerCase() === 'home') btn.classList.add('active');
                 });
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } 
@@ -1042,11 +1045,12 @@
                 trackingCategoryToken = viewToken;
                 document.querySelectorAll('.tab-btn').forEach(btn => {
                     btn.classList.remove('active');
-                    if(btn.getAttribute('data-category') === viewToken) btn.classList.add('active');
+                    if (btn.textContent.trim().toLowerCase() === viewToken) btn.classList.add('active');
                 });
                 displayCategoryOverlayDOM(viewToken);
             } 
             else if (viewToken.startsWith('details-')) {
+                // Ensure correct parent categories display behind details panels upon popstate triggers
                 const parsedCategory = historyStateStack.find(t => ['bollywood', 'hollywood', 'series'].includes(t)) || 'home';
                 if (parsedCategory !== 'home') displayCategoryOverlayDOM(parsedCategory);
                 
@@ -1054,9 +1058,10 @@
                 if (window.openDetailsPanel) window.openDetailsPanel(targetMediaId);
             } 
             else if (viewToken.startsWith('player-')) {
+                // Make sure context layouts remain structurally open below video frame
                 const parsedCategory = historyStateStack.find(t => ['bollywood', 'hollywood', 'series'].includes(t)) || 'home';
                 if (parsedCategory !== 'home') displayCategoryOverlayDOM(parsedCategory);
-                
+
                 const priorDetailsToken = [...historyStateStack].reverse().find(t => t.startsWith('details-'));
                 if (priorDetailsToken && window.openDetailsPanel) {
                     window.openDetailsPanel(priorDetailsToken.replace('details-', ''));
@@ -1068,7 +1073,7 @@
         }
 
         function displayCategoryOverlayDOM(categoryKey) {
-            if (trackingCategoryToken !== categoryKey) return; 
+            trackingCategoryToken = categoryKey;
             trackedItemsCounter = 0;
             const targetModal = document.getElementById('global-category-overlay');
             const targetTitle = document.getElementById('category-title-target');
@@ -1095,7 +1100,6 @@
             }
 
             const rawSourceCards = Array.from(targetRowSource.querySelectorAll('.media-card'));
-            const totalSourceCount = rawSourceCards.length;
             const batchLimitIndex = trackedItemsCounter + paginationThreshold;
             const itemsToPopulate = rawSourceCards.slice(trackedItemsCounter, batchLimitIndex);
 
@@ -1114,18 +1118,7 @@
             });
 
             trackedItemsCounter += itemsToPopulate.length;
-
-            if (totalSourceCount < 4) {
-                targetGrid.style.justifyContent = "center";
-            } else {
-                targetGrid.style.justifyContent = "start";
-            }
-
-            if (trackedItemsCounter >= totalSourceCount || totalSourceCount <= paginationThreshold) {
-                actionsBox.style.display = "none";
-            } else {
-                actionsBox.style.display = "flex";
-            }
+            actionsBox.style.display = (trackedItemsCounter >= rawSourceCards.length) ? "none" : "flex";
         }
 
         function loadNextCategoryBatch() {
@@ -1137,17 +1130,11 @@
             pushNavigationState('home');
         }
 
-        // Intercept function protects current states from 2-second interval loops
-        function InterceptDynamicDOMPopups() {
+        // INTERCEPT ENGINE: Syncs core open/close triggers in app.js with History API Stack Tokens
+        function patchAppJsNavigationInterceptors() {
             const originalOpenDetailsPanel = window.openDetailsPanel;
             if (originalOpenDetailsPanel) {
                 window.openDetailsPanel = function(mediaId) {
-                    // Lock protection guard: Ignore background code calls if details are already open
-                    const currentTopState = historyStateStack[historyStateStack.length - 1];
-                    if (currentTopState === `details-${mediaId}` || currentTopState.startsWith('player-')) {
-                        originalOpenDetailsPanel(mediaId);
-                        return;
-                    }
                     if (!internalNavigationFlag) {
                         pushNavigationState(`details-${mediaId}`);
                     } else {
@@ -1159,12 +1146,6 @@
             const originalOpenCinemaScreen = window.openCinemaScreen;
             if (originalOpenCinemaScreen) {
                 window.openCinemaScreen = function(videoUrl) {
-                    // Lock protection guard: Ignore background code calls if video screen is already running
-                    const currentTopState = historyStateStack[historyStateStack.length - 1];
-                    if (currentTopState === `player-${encodeURIComponent(videoUrl)}`) {
-                        originalOpenCinemaScreen(videoUrl);
-                        return;
-                    }
                     if (!internalNavigationFlag) {
                         pushNavigationState(`player-${encodeURIComponent(videoUrl)}`);
                     } else {
@@ -1172,42 +1153,10 @@
                     }
                 };
             }
-
-            // Guard close event systems against aggressive background loops
-            const originalCloseDetailsPanel = window.closeDetailsPanel;
-            if (originalCloseDetailsPanel) {
-                window.closeDetailsPanel = function() {
-                    const currentTopState = historyStateStack[historyStateStack.length - 1];
-                    // If history says details panel should be open, forbid background app.js loops from closing it!
-                    if (currentTopState.startsWith('details-') && !internalNavigationFlag) {
-                        return; 
-                    }
-                    originalCloseDetailsPanel();
-                };
-            }
-
-            const originalCloseCinemaScreen = window.closeCinemaScreen;
-            if (originalCloseCinemaScreen) {
-                window.closeCinemaScreen = function() {
-                    const currentTopState = historyStateStack[historyStateStack.length - 1];
-                    // If history says movie player should be open, forbid background app.js loops from closing it!
-                    if (currentTopState.startsWith('player-') && !internalNavigationFlag) {
-                        return;
-                    }
-                    originalCloseCinemaScreen();
-                };
-            }
         }
 
+        // Listen explicitly to backward popstate changes triggered by hardware or screen back buttons
         window.addEventListener('popstate', (event) => {
-            if (internalNavigationFlag) return;
-
-            // Trigger internal cleanup functions strictly upon user popstate navigation events
-            internalNavigationFlag = true;
-            if (window.closeCinemaScreen) window.closeCinemaScreen();
-            if (window.closeDetailsPanel) window.closeDetailsPanel();
-            internalNavigationFlag = false;
-
             if (event.state && event.state.token) {
                 const destinationToken = event.state.token;
                 const matchIndex = historyStateStack.indexOf(destinationToken);
@@ -1225,7 +1174,7 @@
         });
 
         window.addEventListener('DOMContentLoaded', () => {
-            InterceptDynamicDOMPopups();
+            patchAppJsNavigationInterceptors();
             
             const urlSearchParameters = new URLSearchParams(window.location.search);
             const routeDestination = urlSearchParameters.get('category');
