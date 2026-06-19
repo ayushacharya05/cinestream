@@ -920,8 +920,7 @@
             <div class="row-header">
                 <h2 class="row-title">Bollywood Hits</h2>
                 <div class="carousel-arrows">
-                    <button class="arrow-btn" onclick="scrollCarousel('bollywood-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
-                    <button class="arrow-btn" onclick="scrollCarousel('bollywood-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+                    <button class="arrow-btn" onclick="scrollCarousel('bollywood-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>                    <button class="arrow-btn" onclick="scrollCarousel('bollywood-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
                 </div>
             </div>
             <div class="carousel-viewport" id="bollywood-render-grid"></div>
@@ -931,8 +930,7 @@
             <div class="row-header">
                 <h2 class="row-title">Hollywood Blockbusters</h2>
                 <div class="carousel-arrows">
-                    <button class="arrow-btn" onclick="scrollCarousel('hollywood-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
-                    <button class="arrow-btn" onclick="scrollCarousel('hollywood-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+                    <button class="arrow-btn" onclick="scrollCarousel('hollywood-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>                    <button class="arrow-btn" onclick="scrollCarousel('hollywood-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
                 </div>
             </div>
             <div class="carousel-viewport" id="hollywood-render-grid"></div>
@@ -942,8 +940,7 @@
             <div class="row-header">
                 <h2 class="row-title">Must-Watch Web Series</h2>
                 <div class="carousel-arrows">
-                    <button class="arrow-btn" onclick="scrollCarousel('series-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
-                    <button class="arrow-btn" onclick="scrollCarousel('series-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+                    <button class="arrow-btn" onclick="scrollCarousel('series-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>                    <button class="arrow-btn" onclick="scrollCarousel('series-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
                 </div>
             </div>
             <div class="carousel-viewport" id="series-render-grid"></div>
@@ -991,12 +988,11 @@
 
     <script src="app.js"></script>
     <script>
-        /* SECURE LINEAR NAVIGATION ENGINE (STATE STACK MODEL) */
+        /* SECURE LINEAR NAVIGATION ENGINE WITH RACE CONDITION GUARDS */
         let trackingCategoryToken = "home";
         let trackedItemsCounter = 0;
         const paginationThreshold = 8; 
 
-        // Memory stack array mirrors the tracking steps exactly
         let historyStateStack = ['home']; 
         let internalNavigationFlag = false;
 
@@ -1005,11 +1001,9 @@
             pushNavigationState(categoryKey);
         }
 
-        // Shared dynamic entry-point function for states
         function pushNavigationState(newStateToken) {
             internalNavigationFlag = true;
             
-            // Build visual URL query paths based on target states
             let dynamicUrl = window.location.pathname;
             if (newStateToken !== 'home' && ['bollywood', 'hollywood', 'series'].includes(newStateToken)) {
                 dynamicUrl = `?category=${newStateToken}`;
@@ -1021,22 +1015,21 @@
             internalNavigationFlag = false;
         }
 
-        // Explicit single step-back controller invoked by close UI triggers
         function triggerStepBack() {
             if (historyStateStack.length > 1) {
                 history.back();
             }
         }
 
-        // Centralized DOM rendering workflow layer
         function applyActiveViewState(viewToken) {
-            // 1. Reset all open visual layout containers cleanly
-            document.getElementById('global-category-overlay').classList.remove('active');
-            if (window.closeDetailsPanel) window.closeDetailsPanel();
-            if (window.closeCinemaScreen) window.closeCinemaScreen();
-            document.body.style.overflow = "";
+            // CRITICAL STEP: Reset view tokens only if navigating backward to home or a strict clean category
+            if (viewToken === 'home' || ['bollywood', 'hollywood', 'series'].includes(viewToken)) {
+                document.getElementById('global-category-overlay').classList.remove('active');
+                if (window.closeDetailsPanel) window.closeDetailsPanel();
+                if (window.closeCinemaScreen) window.closeCinemaScreen();
+                document.body.style.overflow = "";
+            }
 
-            // 2. Map structural view layouts
             if (viewToken === 'home') {
                 trackingCategoryToken = 'home';
                 document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1054,7 +1047,6 @@
                 displayCategoryOverlayDOM(viewToken);
             } 
             else if (viewToken.startsWith('details-')) {
-                // Keep background context layout saved
                 const parsedCategory = historyStateStack.find(t => ['bollywood', 'hollywood', 'series'].includes(t)) || 'home';
                 if (parsedCategory !== 'home') displayCategoryOverlayDOM(parsedCategory);
                 
@@ -1062,7 +1054,6 @@
                 if (window.openDetailsPanel) window.openDetailsPanel(targetMediaId);
             } 
             else if (viewToken.startsWith('player-')) {
-                // Restore underlying view state contexts beneath movie player view
                 const parsedCategory = historyStateStack.find(t => ['bollywood', 'hollywood', 'series'].includes(t)) || 'home';
                 if (parsedCategory !== 'home') displayCategoryOverlayDOM(parsedCategory);
                 
@@ -1146,11 +1137,17 @@
             pushNavigationState('home');
         }
 
-        // Intercept function wraps native triggers safely into the step stack 
+        // Intercept function protects current states from 2-second interval loops
         function InterceptDynamicDOMPopups() {
             const originalOpenDetailsPanel = window.openDetailsPanel;
             if (originalOpenDetailsPanel) {
                 window.openDetailsPanel = function(mediaId) {
+                    // Lock protection guard: Ignore background code calls if details are already open
+                    const currentTopState = historyStateStack[historyStateStack.length - 1];
+                    if (currentTopState === `details-${mediaId}` || currentTopState.startsWith('player-')) {
+                        originalOpenDetailsPanel(mediaId);
+                        return;
+                    }
                     if (!internalNavigationFlag) {
                         pushNavigationState(`details-${mediaId}`);
                     } else {
@@ -1162,6 +1159,12 @@
             const originalOpenCinemaScreen = window.openCinemaScreen;
             if (originalOpenCinemaScreen) {
                 window.openCinemaScreen = function(videoUrl) {
+                    // Lock protection guard: Ignore background code calls if video screen is already running
+                    const currentTopState = historyStateStack[historyStateStack.length - 1];
+                    if (currentTopState === `player-${encodeURIComponent(videoUrl)}`) {
+                        originalOpenCinemaScreen(videoUrl);
+                        return;
+                    }
                     if (!internalNavigationFlag) {
                         pushNavigationState(`player-${encodeURIComponent(videoUrl)}`);
                     } else {
@@ -1169,18 +1172,47 @@
                     }
                 };
             }
+
+            // Guard close event systems against aggressive background loops
+            const originalCloseDetailsPanel = window.closeDetailsPanel;
+            if (originalCloseDetailsPanel) {
+                window.closeDetailsPanel = function() {
+                    const currentTopState = historyStateStack[historyStateStack.length - 1];
+                    // If history says details panel should be open, forbid background app.js loops from closing it!
+                    if (currentTopState.startsWith('details-') && !internalNavigationFlag) {
+                        return; 
+                    }
+                    originalCloseDetailsPanel();
+                };
+            }
+
+            const originalCloseCinemaScreen = window.closeCinemaScreen;
+            if (originalCloseCinemaScreen) {
+                window.closeCinemaScreen = function() {
+                    const currentTopState = historyStateStack[historyStateStack.length - 1];
+                    // If history says movie player should be open, forbid background app.js loops from closing it!
+                    if (currentTopState.startsWith('player-') && !internalNavigationFlag) {
+                        return;
+                    }
+                    originalCloseCinemaScreen();
+                };
+            }
         }
 
-        /* Popstate synchronization browser back/forward routing layer */
         window.addEventListener('popstate', (event) => {
             if (internalNavigationFlag) return;
+
+            // Trigger internal cleanup functions strictly upon user popstate navigation events
+            internalNavigationFlag = true;
+            if (window.closeCinemaScreen) window.closeCinemaScreen();
+            if (window.closeDetailsPanel) window.closeDetailsPanel();
+            internalNavigationFlag = false;
 
             if (event.state && event.state.token) {
                 const destinationToken = event.state.token;
                 const matchIndex = historyStateStack.indexOf(destinationToken);
                 
                 if (matchIndex !== -1) {
-                    // Truncate forward items sequentially when navigating back
                     historyStateStack = historyStateStack.slice(0, matchIndex + 1);
                 } else {
                     historyStateStack.push(destinationToken);
@@ -1192,7 +1224,6 @@
             }
         });
 
-        /* Setup Routing Deep-link initialization hooks */
         window.addEventListener('DOMContentLoaded', () => {
             InterceptDynamicDOMPopups();
             
