@@ -59,6 +59,19 @@ const contentDatabase = [
         description: "A mysterious traveler slips into the heart of Karachi's underbelly and rises through its ranks with lethal precision, only to tear the notorious ISI-Underworld nexus apart from within."
     },
 
+ {
+        id: "Raid 2",
+        title: "Raid 2",
+        type: "movie",
+        genre: "Thriller",
+        industry: "bollywood", // Maps to Bollywood Hits row
+        rating: "6.2",
+        poster: "https://m.media-amazon.com/images/M/MV5BOTI4YWMzOGYtODkzYS00NTEyLWFmMzYtMzJkOGZmOWZlNThhXkEyXkFqcGc@._V1_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/movie/tt28089700",
+        releaseDate: "2025-05-01",
+        description: "In 1989 Rajasthan, IPS officer Patnaik raids a palace but fails. After requesting a bribe, he's transferred to Bhoj, where he investigates Dada Bhai, a respected local figure. "
+    },
+
         {
         id: "saiyara",
         title: "Saiyaara",
@@ -70,6 +83,46 @@ const contentDatabase = [
         streamUrl: "https://streamimdb.ru/embed/movie/tt28037987",
         releaseDate: "2025-07-18",
         description: "Heartbroken after being ditched at the altar, Vaani meets angry, struggling musician Krish. Her poetry ignites his songs and their passionate love. But as fame rises, her fading memories threaten to erase everything."
+    },
+    
+         {
+        id: "Dhadak-2-2025",
+        title: "Dhadak 2 2025",
+        type: "movie",
+        genre: "Romance",
+        industry: "bollywood", // Maps to Bollywood Hits row
+        rating: "6.8",
+        poster: "https://m.media-amazon.com/images/M/MV5BY2EzN2UxMDItZTk2NC00NDcwLTliYjktNWI4ZWJjZTQ1ZTg2XkEyXkFqcGc@._V1_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/movie/tt13451410",
+        releaseDate: "2025-08-01",
+        description: "Targeted for his caste, a first-year student at an elite college fights off vicious bullies and lethal threats to protect his dignity and forbidden love."
+    },
+
+       {
+        id: "Jolly-LLB-3",
+        title: "Jolly LLB 3",
+        type: "movie",
+        genre: "Thriller",
+        industry: "bollywood", // Maps to Bollywood Hits row
+        rating: "6.4",
+        poster: "https://m.media-amazon.com/images/M/MV5BMDQ3OTFkNzUtYjM4OC00ZGFlLTliZTEtMTNiY2U2YzVkNDg3XkEyXkFqcGc@._V1_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/movie/tt27996020",
+        releaseDate: "2025-09-19",
+        description: "Smart-alec Jolly Mishra and jugadu Jolly Tyagi clash in Judge Tripathi's court with witty banter, wild twists, and heartfelt chaos in this ultimate courtroom comedy."
+    },
+
+    
+   {
+        id: "Tere-Ishk-Mein",
+        title: "Tere Ishk Mein",
+        type: "movie",
+        genre: "Romance",
+        industry: "bollywood", // Maps to Bollywood Hits row
+        rating: "6.2",
+        poster: "https://m.media-amazon.com/images/M/MV5BODM3MGUxMjEtMzNmYi00ODYzLTk2OTYtNzcxZmE5NmRmMjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/movie/tt28142095",
+        releaseDate: "2025-11-28",
+        description: "Shankar and Mukti's intense love story unfolds against the backdrop of Benaras, exploring surrender and transformation through an all-consuming romance that heals, hurts and changes them."
     },
  /**hollywood*/
 
