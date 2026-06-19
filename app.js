@@ -515,7 +515,7 @@ function scrollToSection(targetId, elementPointer) {
 
 /**
  * Enhanced Search Engine Controller
- * Filters titles instantly, spotlights matches, switches category tabs, and scrolls down.
+ * Filters titles instantly, shows ONLY matching movies, and hides non-matching elements entirely.
  */
 function setupSearchEngineListener() {
     const searchInput = document.getElementById('live-search');
@@ -523,15 +523,23 @@ function setupSearchEngineListener() {
     
     searchInput.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase().trim();
-        const allCards = document.querySelectorAll('.media-card');
+        const allSections = document.querySelectorAll('section.row-container');
         
         if (query === '') {
-            // Restore everything back to normal display parameters
-            allCards.forEach(card => {
-                card.style.opacity = '1';
-                card.style.transform = '';
-                card.style.borderColor = 'var(--border-subtle)';
+            // Restore everything back to normal grid parameters
+            allSections.forEach(section => {
+                section.style.display = 'block'; // Show all row containers
+                const cards = section.querySelectorAll('.media-card');
+                cards.forEach(card => {
+                    card.style.display = 'block'; // Show all cards
+                    card.style.transform = '';
+                    card.style.borderColor = 'var(--border-subtle)';
+                });
             });
+            
+            // Reset horizontal track scrolling back to start
+            document.querySelectorAll('.movies-grid').forEach(grid => grid.scrollLeft = 0);
+
             // Default select the Home tab
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             const homeTab = document.querySelectorAll('.tab-btn')[0];
@@ -541,31 +549,41 @@ function setupSearchEngineListener() {
 
         let firstMatchedSectionId = null;
 
-        allCards.forEach(card => {
-            const title = card.dataset.title || '';
-            const genre = card.dataset.genre || '';
-            const desc = card.dataset.desc || '';
+        allSections.forEach(section => {
+            const cards = section.querySelectorAll('.media-card');
+            let sectionHasMatch = false;
 
-            if (title.includes(query) || genre.includes(query) || desc.includes(query)) {
-                // Focus styling on matching cards
-                card.style.opacity = '1';
-                card.style.transform = 'scale(1.02)';
-                card.style.borderColor = 'var(--accent-primary)';
+            cards.forEach(card => {
+                const title = card.dataset.title || '';
+                const genre = card.dataset.genre || '';
+                const desc = card.dataset.desc || '';
 
-                // Capture parent wrapper ID of the first match to jump to
+                if (title.includes(query) || genre.includes(query) || desc.includes(query)) {
+                    card.style.display = 'block'; // Keep match visible
+                    card.style.borderColor = 'var(--accent-primary)';
+                    sectionHasMatch = true;
+                } else {
+                    card.style.display = 'none'; // Hide non-matching movie entirely
+                }
+            });
+
+            // If a category row has at least one matching movie, keep it visible
+            if (sectionHasMatch) {
+                section.style.display = 'block';
+                
+                // Instantly snap the layout track back to 0 so the active movie is right in front of the screen
+                const gridElement = section.querySelector('.movies-grid');
+                if (gridElement) gridElement.scrollLeft = 0;
+
                 if (!firstMatchedSectionId) {
-                    const parentRow = card.closest('section.row-container');
-                    if (parentRow) firstMatchedSectionId = parentRow.id;
+                    firstMatchedSectionId = section.id;
                 }
             } else {
-                // Dim non-matching items
-                card.style.opacity = '0.25';
-                card.style.transform = 'scale(0.96)';
-                card.style.borderColor = 'var(--border-subtle)';
+                section.style.display = 'none'; // Hide entire category if no matches exist
             }
         });
 
-        // If a match was found, slide straight to its collection row smoothly
+        // Jump straight down to the matched row
         if (firstMatchedSectionId) {
             scrollToSection(firstMatchedSectionId, null);
         }
@@ -577,11 +595,17 @@ function resetFilters(e) {
     const searchInput = document.getElementById('live-search');
     if (searchInput) searchInput.value = '';
     
-    const allCards = document.querySelectorAll('.media-card');
-    allCards.forEach(card => {
-        card.style.opacity = '1';
-        card.style.transform = '';
-        card.style.borderColor = 'var(--border-subtle)';
+    const allSections = document.querySelectorAll('section.row-container');
+    allSections.forEach(section => {
+        section.style.display = 'block';
+        const cards = section.querySelectorAll('.media-card');
+        cards.forEach(card => {
+            card.style.display = 'block';
+            card.style.transform = '';
+            card.style.borderColor = 'var(--border-subtle)';
+        });
+        const gridElement = section.querySelector('.movies-grid');
+        if (gridElement) gridElement.scrollLeft = 0;
     });
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
