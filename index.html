@@ -1,249 +1,1198 @@
-<!DOCTYPE html><html lang="en"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>CineStream</title>        <link rel="preconnect" href="https://fonts.googleapis.com">    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ayushacharya05/cinestream/refs/heads/main/images/ico.png">        <style>        /* Modern Design System Architecture Tokens */        :root {            --bg-deep: #050508;            --bg-surface: #0e0e12;            --bg-surface-elevated: #16161f;            --accent-primary: #e50914;            --accent-glow: rgba(229, 9, 20, 0.4);            --text-primary: #f5f5f7;            --text-secondary: #94a3b8;            --text-accent: #ffcc00;            --border-subtle: rgba(255, 255, 255, 0.05);            --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;            --radius-main: 16px;            --radius-pill: 100px;            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);            --transition-smooth: all 0.6s var(--ease-out-expo);        }
-        * {            margin: 0;            padding: 0;            box-sizing: border-box;            -webkit-tap-highlight-color: transparent;        }
-        html {            scroll-behavior: smooth;        }
-        body {            font-family: var(--font-main);            background-color: var(--bg-deep);            color: var(--text-primary);            overflow-x: hidden;            -webkit-font-smoothing: antialiased;        }
-        /* Fluid Premium Custom Scrollbars */        ::-webkit-scrollbar {            width: 8px;            height: 6px;        }        ::-webkit-scrollbar-track {            background: var(--bg-deep);        }        ::-webkit-scrollbar-thumb {            background: #1f1f2e;            border-radius: var(--radius-pill);        }        ::-webkit-scrollbar-thumb:hover {            background: #2f2f45;        }
-        /* Glassmorphic Top Bar Navigation Component */        header {            position: fixed;            top: 0;            left: 0;            width: 100%;            padding: 24px 6%;            z-index: 1000;            display: flex;            justify-content: space-between;            align-items: center;            background: linear-gradient(to bottom, rgba(5,5,8,0.95) 0%, rgba(5,5,8,0) 100%);            transition: var(--transition-smooth);        }
-        header.scrolled {            padding: 14px 6%;            background: rgba(14, 14, 18, 0.85);            backdrop-filter: blur(30px);            border-bottom: 1px solid var(--border-subtle);            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);        }
-        .logo {            font-size: 1.6rem;            font-weight: 800;            color: var(--text-primary);            text-decoration: none;            letter-spacing: -0.8px;        }
-        .logo span {            color: var(--accent-primary);        }
-        .nav-controls {            display: flex;            align-items: center;            gap: 24px;        }
-        .category-tabs {            display: flex;            background: rgba(255, 255, 255, 0.03);            padding: 4px;            border-radius: var(--radius-pill);            border: 1px solid var(--border-subtle);            overflow-x: auto;            scrollbar-width: none;        }                .category-tabs::-webkit-scrollbar {            display: none;        }
-        .tab-btn {            background: transparent;            border: none;            color: var(--text-secondary);            padding: 8px 20px;            font-size: 0.85rem;            font-weight: 600;            border-radius: var(--radius-pill);            cursor: pointer;            transition: var(--transition-smooth);            white-space: nowrap;        }
-        .tab-btn.active {            background: var(--accent-primary);            color: white;            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);        }
-        /* Micro-Interactive Search Bar */        .search-container {            position: relative;            display: flex;            align-items: center;        }
-        .search-container input {            background: rgba(255, 255, 255, 0.04);            border: 1px solid var(--border-subtle);            padding: 10px 16px 10px 42px;            border-radius: var(--radius-pill);            color: white;            font-size: 0.85rem;            width: 240px;            transition: var(--transition-smooth);            outline: none;        }
-        .search-container input:focus {            width: 320px;            border-color: rgba(229, 9, 20, 0.6);            background: rgba(255, 255, 255, 0.07);            box-shadow: 0 0 25px rgba(229, 9, 20, 0.2);        }
-        .search-container svg {            position: absolute;            left: 16px;            width: 16px;            height: 16px;            fill: var(--text-secondary);            pointer-events: none;            transition: var(--transition-smooth);        }
-        .search-container input:focus + svg {            fill: var(--accent-primary);        }
-        /* Multi-Slide Dynamic Carousel Architecture Layout */        .hero-carousel-container {            position: relative;            height: 85vh;            min-height: 580px;            width: 100%;            overflow: hidden;            background-color: #000;            margin-bottom: 20px;        }
-        .hero-track {            display: flex;            height: 100%;            transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);        }
-        .hero-slide {            height: 100%;            position: relative;            background-size: cover !important;            background-position: center 20% !important;            background-repeat: no-repeat !important;            display: flex;            align-items: center;            padding: 0 6%;            width: 100vw;            flex-shrink: 0;        }
-        .hero-slide::before {            content: '';            position: absolute;            inset: 0;            background: linear-gradient(to right, rgba(5,5,8,0.98) 25%, rgba(5,5,8,0.6) 60%, rgba(5,5,8,0) 90%),                        linear-gradient(to top, var(--bg-deep) 0%, rgba(5,5,8,0.2) 40%, rgba(5,5,8,0) 100%);            z-index: 1;        }
-        .hero-inner {            max-width: 650px;            z-index: 2;            position: relative;        }
-        .badge-row {            display: flex;            align-items: center;            gap: 12px;            margin-bottom: 20px;        }
-        .spotlight-badge {            background: linear-gradient(135deg, var(--accent-primary) 0%, #b80710 100%);            color: white;            padding: 6px 14px;            border-radius: 8px;            font-size: 0.7rem;            font-weight: 800;            text-transform: uppercase;            letter-spacing: 1px;        }
-        .genre-badge {            background: rgba(255, 255, 255, 0.07);            border: 1px solid var(--border-subtle);            color: var(--text-secondary);            padding: 5px 14px;            border-radius: var(--radius-pill);            font-size: 0.75rem;        }
-        .hero-title {            font-size: 3.6rem;            font-weight: 800;            line-height: 1.1;            margin-bottom: 20px;            letter-spacing: -2px;            text-shadow: 0 4px 24px rgba(0,0,0,0.7);        }
-        .hero-meta {            display: flex;            align-items: center;            gap: 18px;            font-size: 0.9rem;            color: var(--text-secondary);            margin-bottom: 24px;        }
-        .rating-star {            color: var(--text-accent);            display: flex;            align-items: center;            gap: 6px;            font-weight: 800;        }
-        .hero-description {            font-size: 1.05rem;            line-height: 1.6;            color: rgba(245, 245, 247, 0.75);            margin-bottom: 36px;        }
-        .btn-stream {            background: var(--text-primary);            color: var(--bg-deep);            border: none;            padding: 14px 32px;            font-size: 0.95rem;            font-weight: 700;            border-radius: var(--radius-main);            cursor: pointer;            transition: var(--transition-smooth);            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);        }
-        .btn-stream:hover {            transform: translateY(-4px);            background: var(--accent-primary);            color: white;            box-shadow: 0 15px 35px var(--accent-glow);        }
-        /* Horizontal Rows and Slider Views */        .content-wrap {            padding-bottom: 80px;        }
-        .row-container {            margin-bottom: 40px;        }
-        .row-header {            display: flex;            justify-content: space-between;            align-items: center;            padding: 0 6%;            margin-bottom: 20px;        }
-        .row-title {            font-size: 1.4rem;            font-weight: 700;            display: flex;            align-items: center;            gap: 12px;        }
-        .row-title::before {            content: '';            width: 4px;            height: 20px;            background: var(--accent-primary);            border-radius: var(--radius-pill);        }
-        .carousel-arrows {            display: flex;            gap: 10px;        }
-        .arrow-btn {            background: rgba(255, 255, 255, 0.03);            border: 1px solid var(--border-subtle);            color: white;            width: 38px;            height: 38px;            border-radius: 50%;            display: flex;            align-items: center;            justify-content: center;            cursor: pointer;            transition: var(--transition-smooth);        }
-        .arrow-btn:hover {            background: var(--accent-primary);            border-color: var(--accent-primary);        }
-        .arrow-btn svg {            width: 16px;            height: 16px;            fill: currentColor;        }
-        .carousel-viewport {            padding: 10px 6% 20px 6%;            overflow-x: auto;            display: flex;            gap: 24px;            scrollbar-width: none;            -webkit-overflow-scrolling: touch;            scroll-behavior: smooth;        }
-        .carousel-viewport::-webkit-scrollbar {            display: none;        }
-        /* Empty State Indicators */        .empty-placeholder-msg {            color: var(--text-secondary);            font-size: 0.9rem;            padding: 20px 0;            font-style: italic;        }
-        /* Premium Media Cards Layout */        .media-card {            flex: 0 0 230px;            background: var(--bg-surface);            border-radius: var(--radius-main);            overflow: hidden;            cursor: pointer;            border: 1px solid var(--border-subtle);            display: flex;            flex-direction: column;            transition: var(--transition-smooth);        }
-        .media-card:hover {            transform: translateY(-10px) scale(1.03);            background: var(--bg-surface-elevated);            box-shadow: 0 20px 40px rgba(0,0,0,0.6);            border-color: rgba(255,255,255,0.1);        }
-        .poster-wrapper {            position: relative;            padding-top: 145%;            background: #121216;            overflow: hidden;        }
-        .poster-wrapper img {            position: absolute;            top: 0;            left: 0;            width: 100%;            height: 100%;            object-fit: cover;            transition: transform 0.8s var(--ease-out-expo);        }
-        .media-card:hover .poster-wrapper img {            transform: scale(1.06);        }
-        .card-dark-overlay {            position: absolute;            inset: 0;            background: linear-gradient(to top, rgba(5,5,8,0.9) 0%, transparent 70%);            opacity: 0;            display: flex;            align-items: center;            justify-content: center;            transition: var(--transition-smooth);        }
-        .media-card:hover .card-dark-overlay {            opacity: 1;        }
-        .info-circle-btn {            background: white;            color: black;            padding: 10px 18px;            font-weight: 700;            border-radius: var(--radius-pill);            font-size: 0.8rem;            transform: translateY(15px);            transition: var(--transition-smooth);        }
-        .media-card:hover .info-circle-btn {            transform: translateY(0);        }
-        .card-body {            padding: 16px;            display: flex;            flex-direction: column;            flex-grow: 1;        }
-        .card-info-header {            display: flex;            justify-content: space-between;            align-items: center;            font-size: 0.75rem;            font-weight: 700;            margin-bottom: 6px;            text-transform: uppercase;        }
-        .type-tag {            color: var(--accent-primary);        }
-        .card-rating {            color: var(--text-accent);            display: flex;            align-items: center;            gap: 4px;        }
-        .card-title {            font-size: 0.95rem;            font-weight: 600;            white-space: nowrap;            overflow: hidden;            text-overflow: ellipsis;        }
-        .card-genre {            font-size: 0.8rem;            color: var(--text-secondary);            margin-top: 4px;        }
-        /* Carousel Slide Dots Controls */        .carousel-dots {            position: absolute;            bottom: 40px;            right: 6%;            z-index: 10;            display: flex;            gap: 12px;        }
-        .dot {            width: 10px;            height: 10px;            border-radius: 50%;            background: rgba(255, 255, 255, 0.2);            cursor: pointer;            transition: var(--transition-smooth);        }
-        .dot.active {            background: var(--accent-primary);            width: 30px;            border-radius: var(--radius-pill);            box-shadow: 0 0 10px var(--accent-glow);        }
-        /* Dedicated Details Presentation Overlay Drawer */        .details-panel-overlay {            position: fixed;            inset: 0;            background: rgba(3,3,5,0.85);            backdrop-filter: blur(20px);            z-index: 1500;            display: none;            justify-content: center;            align-items: center;            opacity: 0;            transition: var(--transition-smooth);        }
-        .details-panel-overlay.active {            display: flex;            opacity: 1;        }
-        .details-card-box {            background: var(--bg-surface-elevated);            width: 90%;            max-width: 750px;            border-radius: 24px;            overflow: hidden;            border: 1px solid rgba(255,255,255,0.08);            display: flex;            flex-direction: column;            transform: scale(0.9) translateY(20px);            transition: var(--transition-smooth);            position: relative;        }
-        .details-panel-overlay.active .details-card-box {            transform: scale(1) translateY(0);        }
-        .details-banner-img {            height: 320px;            background-size: cover !important;            background-position: center 20% !important;            position: relative;        }
-        .details-banner-img::after {            content: '';            position: absolute;            inset: 0;            background: linear-gradient(to top, var(--bg-surface-elevated) 0%, transparent 100%);        }
-        .details-info-content {            padding: 32px;            position: relative;        }
-        .close-details-btn {            position: absolute;            top: 20px;            right: 20px;            background: rgba(0,0,0,0.5);            border: 1px solid var(--border-subtle);            color: white;            width: 36px;            height: 36px;            border-radius: 50%;            font-size: 1.2rem;            cursor: pointer;            display: flex;            align-items: center;            justify-content: center;            z-index: 10;        }
-        .details-title {            font-size: 2.2rem;            font-weight: 800;            margin-bottom: 12px;            letter-spacing: -1px;        }
-        .details-meta-row {            display: flex;            gap: 16px;            font-size: 0.9rem;            color: var(--text-secondary);            margin-bottom: 18px;            align-items: center;        }
-        .details-desc-text {            font-size: 1rem;            color: rgba(255,255,255,0.75);            line-height: 1.6;            margin-bottom: 28px;        }
-        .play-master-btn {            background: var(--accent-primary);            color: white;            border: none;            padding: 14px 32px;            font-size: 0.95rem;            font-weight: 700;            border-radius: var(--radius-main);            cursor: pointer;            display: inline-flex;            align-items: center;            gap: 10px;            transition: var(--transition-smooth);            box-shadow: 0 8px 20px var(--accent-glow);        }
-        .play-master-btn:hover {            transform: translateY(-3px);            box-shadow: 0 12px 25px var(--accent-glow);            background: #ff121d;        }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineStream</title>
+        
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ayushacharya05/cinestream/refs/heads/main/images/ico.png">
+        
+    <style>
+        /* Modern Design System Architecture Tokens */
+        :root {
+            --bg-deep: #050508;
+            --bg-surface: #0e0e12;
+            --bg-surface-elevated: #16161f;
+            --accent-primary: #e50914;
+            --accent-glow: rgba(229, 9, 20, 0.4);
+            --text-primary: #f5f5f7;
+            --text-secondary: #94a3b8;
+            --text-accent: #ffcc00;
+            --border-subtle: rgba(255, 255, 255, 0.05);
+            --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            --radius-main: 16px;
+            --radius-pill: 100px;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-smooth: all 0.6s var(--ease-out-expo);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* Fluid Premium Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f1f2e;
+            border-radius: var(--radius-pill);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2f2f45;
+        }
+        /* Glassmorphic Top Bar Navigation Component */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 24px 6%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(5,5,8,0.95) 0%, rgba(5,5,8,0) 100%);
+            transition: var(--transition-smooth);
+        }
+        header.scrolled {
+            padding: 14px 6%;
+            background: rgba(14, 14, 18, 0.85);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid var(--border-subtle);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.8px;
+        }
+        .logo span {
+            color: var(--accent-primary);
+        }
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .category-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 4px;
+            border-radius: var(--radius-pill);
+            border: 1px solid var(--border-subtle);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            white-space: nowrap;
+        }
+        .tab-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+        }
+        /* Micro-Interactive Search Bar */
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .search-container input {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            padding: 10px 16px 10px 42px;
+            border-radius: var(--radius-pill);
+            color: white;
+            font-size: 0.85rem;
+            width: 240px;
+            transition: var(--transition-smooth);
+            outline: none;
+        }
+        .search-container input:focus {
+            width: 320px;
+            border-color: rgba(229, 9, 20, 0.6);
+            background: rgba(255, 255, 255, 0.07);
+            box-shadow: 0 0 25px rgba(229, 9, 20, 0.2);
+        }
+        .search-container svg {
+            position: absolute;
+            left: 16px;
+            width: 16px;
+            height: 16px;
+            fill: var(--text-secondary);
+            pointer-events: none;
+            transition: var(--transition-smooth);
+        }
+        .search-container input:focus + svg {
+            fill: var(--accent-primary);
+        }
+        /* Multi-Slide Dynamic Carousel Architecture Layout */
+        .hero-carousel-container {
+            position: relative;
+            height: 85vh;
+            min-height: 580px;
+            width: 100%;
+            overflow: hidden;
+            background-color: #000;
+            margin-bottom: 20px;
+        }
+        .hero-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .hero-slide {
+            height: 100%;
+            position: relative;
+            background-size: cover !important;
+            background-position: center 20% !important;
+            background-repeat: no-repeat !important;
+            display: flex;
+            align-items: center;
+            padding: 0 6%;
+            width: 100vw;
+            flex-shrink: 0;
+        }
+        .hero-slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(5,5,8,0.98) 25%, rgba(5,5,8,0.6) 60%, rgba(5,5,8,0) 90%),
+                        linear-gradient(to top, var(--bg-deep) 0%, rgba(5,5,8,0.2) 40%, rgba(5,5,8,0) 100%);
+            z-index: 1;
+        }
+        .hero-inner {
+            max-width: 650px;
+            z-index: 2;
+            position: relative;
+        }
+        .badge-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .spotlight-badge {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, #b80710 100%);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .genre-badge {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            padding: 5px 14px;
+            border-radius: var(--radius-pill);
+            font-size: 0.75rem;
+        }
+        .hero-title {
+            font-size: 3.6rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            text-shadow: 0 4px 24px rgba(0,0,0,0.7);
+        }
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        .rating-star {
+            color: var(--text-accent);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 800;
+        }
+        .hero-description {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: rgba(245, 245, 247, 0.75);
+            margin-bottom: 36px;
+        }
+        .btn-stream {
+            background: var(--text-primary);
+            color: var(--bg-deep);
+            border: none;
+            padding: 14px 32px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: var(--radius-main);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+        }
+        .btn-stream:hover {
+            transform: translateY(-4px);
+            background: var(--accent-primary);
+            color: white;
+            box-shadow: 0 15px 35px var(--accent-glow);
+        }
+        /* Horizontal Rows and Slider Views */
+        .content-wrap {
+            padding-bottom: 80px;
+        }
+        .row-container {
+            margin-bottom: 40px;
+        }
+        .row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 6%;
+            margin-bottom: 20px;
+        }
+        .row-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .row-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--accent-primary);
+            border-radius: var(--radius-pill);
+        }
+        .carousel-arrows {
+            display: flex;
+            gap: 10px;
+        }
+        .arrow-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        .arrow-btn:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+        .arrow-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        .carousel-viewport {
+            padding: 10px 6% 20px 6%;
+            overflow-x: auto;
+            display: flex;
+            gap: 24px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+        .carousel-viewport::-webkit-scrollbar {
+            display: none;
+        }
+        /* Empty State Indicators */
+        .empty-placeholder-msg {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding: 20px 0;
+            font-style: italic;
+        }
+        /* Premium Media Cards Layout */
+        .media-card {
+            flex: 0 0 230px;
+            background: var(--bg-surface);
+            border-radius: var(--radius-main);
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-smooth);
+        }
+        .media-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            background: var(--bg-surface-elevated);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            border-color: rgba(255,255,255,0.1);
+        }
+        .poster-wrapper {
+            position: relative;
+            padding-top: 145%;
+            background: #121216;
+            overflow: hidden;
+        }
+        .poster-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s var(--ease-out-expo);
+        }
+        .media-card:hover .poster-wrapper img {
+            transform: scale(1.06);
+        }
+        .card-dark-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(5,5,8,0.9) 0%, transparent 70%);
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+        .media-card:hover .card-dark-overlay {
+            opacity: 1;
+        }
+        .info-circle-btn {
+            background: white;
+            color: black;
+            padding: 10px 18px;
+            font-weight: 700;
+            border-radius: var(--radius-pill);
+            font-size: 0.8rem;
+            transform: translateY(15px);
+            transition: var(--transition-smooth);
+        }
+        .media-card:hover .info-circle-btn {
+            transform: translateY(0);
+        }
+        .card-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .card-info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+        .type-tag {
+            color: var(--accent-primary);
+        }
+        .card-rating {
+            color: var(--text-accent);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .card-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .card-genre {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        /* Carousel Slide Dots Controls */
+        .carousel-dots {
+            position: absolute;
+            bottom: 40px;
+            right: 6%;
+            z-index: 10;
+            display: flex;
+            gap: 12px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        .dot.active {
+            background: var(--accent-primary);
+            width: 30px;
+            border-radius: var(--radius-pill);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+        /* Dedicated Details Presentation Overlay Drawer */
+        .details-panel-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(3,3,5,0.85);
+            backdrop-filter: blur(20px);
+            z-index: 1500;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+        .details-panel-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .details-card-box {
+            background: var(--bg-surface-elevated);
+            width: 90%;
+            max-width: 750px;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.9) translateY(20px);
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+        .details-panel-overlay.active .details-card-box {
+            transform: scale(1) translateY(0);
+        }
+        .details-banner-img {
+            height: 320px;
+            background-size: cover !important;
+            background-position: center 20% !important;
+            position: relative;
+        }
+        .details-banner-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--bg-surface-elevated) 0%, transparent 100%);
+        }
+        .details-info-content {
+            padding: 32px;
+            position: relative;
+        }
+        .close-details-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--border-subtle);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        .details-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+        .details-meta-row {
+            display: flex;
+            gap: 16px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 18px;
+            align-items: center;
+        }
+        .details-desc-text {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.75);
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+        .play-master-btn {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: var(--radius-main);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition-smooth);
+            box-shadow: 0 8px 20px var(--accent-glow);
+        }
+        .play-master-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px var(--accent-glow);
+            background: #ff121d;
+        }
 
         /* Dedicated Full-Screen Category View Grid Architecture */
-        .category-modal-overlay {            position: fixed;            inset: 0;            background: var(--bg-deep);            z-index: 1200;            display: none;            flex-direction: column;            opacity: 0;            transition: opacity 0.4s var(--ease-out-expo);            overflow-y: auto;            padding: 120px 6% 60px 6%;        }        .category-modal-overlay.active {            display: flex;            opacity: 1;        }        .category-modal-header {            display: flex;            justify-content: space-between;            align-items: center;            margin-bottom: 40px;            border-bottom: 1px solid var(--border-subtle);            padding-bottom: 20px;        }        .category-modal-title {            font-size: 2.2rem;            font-weight: 800;            letter-spacing: -1px;            display: flex;            align-items: center;            gap: 14px;        }        .category-modal-title::before {            content: '';            width: 6px;            height: 32px;            background: var(--accent-primary);            border-radius: var(--radius-pill);        }        .close-category-btn {            background: rgba(255, 255, 255, 0.04);            border: 1px solid var(--border-subtle);            color: white;            padding: 10px 24px;            border-radius: var(--radius-pill);            font-weight: 600;            font-size: 0.9rem;            cursor: pointer;            transition: var(--transition-smooth);        }        .close-category-btn:hover {            background: var(--accent-primary);            border-color: var(--accent-primary);            box-shadow: 0 4px 15px var(--accent-glow);        }        .category-movies-grid {            display: grid;            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));            gap: 30px;            width: 100%;        }        .category-movies-grid .media-card {            flex: unset;            width: 100%;        }        .see-more-trigger-container {            display: flex;            justify-content: center;            margin-top: 50px;            width: 100%;        }        .btn-see-more {            background: rgba(255, 255, 255, 0.04);            color: var(--text-primary);            border: 1px solid var(--border-subtle);            padding: 14px 40px;            font-size: 0.95rem;            font-weight: 700;            border-radius: var(--radius-main);            cursor: pointer;            transition: var(--transition-smooth);        }        .btn-see-more:hover {            background: white;            color: var(--bg-deep);            transform: translateY(-3px);            box-shadow: 0 10px 25px rgba(255,255,255,0.1);        }
+        .category-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-deep);
+            z-index: 1200;
+            display: none;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.4s var(--ease-out-expo);
+            overflow-y: auto;
+            padding: 120px 6% 60px 6%;
+        }
+        .category-modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .category-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 20px;
+        }
+        .category-modal-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .category-modal-title::before {
+            content: '';
+            width: 6px;
+            height: 32px;
+            background: var(--accent-primary);
+            border-radius: var(--radius-pill);
+        }
+        .close-category-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            color: white;
+            padding: 10px 24px;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        .close-category-btn:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+        .category-movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 30px;
+            width: 100%;
+        }
+        .category-movies-grid .media-card {
+            flex: unset;
+            width: 100%;
+        }
+        .see-more-trigger-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+            width: 100%;
+        }
+        .btn-see-more {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+            padding: 14px 40px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: var(--radius-main);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        .btn-see-more:hover {
+            background: white;
+            color: var(--bg-deep);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,255,255,0.1);
+        }
 
         /* Fullscreen Video Cinema Modal Player */
-        .player-modal {            position: fixed;            inset: 0;            background: #000;            z-index: 2000;            display: none;            justify-content: center;            align-items: center;        }
-        .player-modal.active {            display: flex;        }
-        .player-window-box {            width: 100%;            height: 100%;            position: relative;        }
-        .player-window-box iframe {            width: 100%;            height: 100%;            border: 0;        }
-        .close-player-btn {            position: absolute;            top: 24px;            right: 24px;            background: rgba(255,255,255,0.1);            border: 1px solid rgba(255,255,255,0.2);            color: white;            width: 44px;            height: 44px;            border-radius: 50%;            font-size: 1.5rem;            cursor: pointer;            display: flex;            align-items: center;            justify-content: center;            transition: var(--transition-smooth);            z-index: 100;            backdrop-filter: blur(10px);        }
-        .close-player-btn:hover {            background: var(--accent-primary);            border-color: var(--accent-primary);            transform: rotate(90deg);        }
+        .player-modal {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .player-modal.active {
+            display: flex;
+        }
+        .player-window-box {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .player-window-box iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .close-player-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        .close-player-btn:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            transform: rotate(90deg);
+        }
         /* Mobile Adaptability Viewport Rules */
-        @media (max-width: 992px) {            header {                padding: 16px 4%;            }            .search-container input {                width: 200px;            }            .search-container input:focus {                width: 260px;            }        }
-        @media (max-width: 768px) {            header, header.scrolled {                padding: 14px 20px;                background: #0e0e12;                border-bottom: 1px solid var(--border-subtle);                flex-direction: row;                justify-content: space-between;                gap: 16px;            }                        .nav-controls {                gap: 14px;                width: auto;                flex-grow: 1;                justify-content: flex-end;            }
-            .category-tabs {                display: flex;                max-width: 280px;                background: rgba(255, 255, 255, 0.02);            }
-            .tab-btn {                padding: 6px 14px;                font-size: 0.8rem;            }
-            .search-container {                position: relative;            }
-            .search-container input {                width: 160px;                padding: 10px 16px 10px 38px;                font-size: 0.85rem;                background: rgba(255, 255, 255, 0.05);                border: 1px solid rgba(255, 255, 255, 0.1);                box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);            }
-            .search-container input:focus {                width: 220px;                border-color: var(--accent-primary);                background: rgba(14, 14, 18, 0.95);            }
-            .search-container svg {                left: 14px;                width: 14px;                height: 14px;            }
-            .hero-carousel-container {                height: 58vh;                min-height: 420px;                padding-top: 60px;            }
-            .hero-title {                font-size: 2.4rem;                letter-spacing: -1px;            }
-            .hero-description {                display: none;            }
-            .carousel-arrows {                display: none;            }
-            .media-card {                flex: 0 0 170px;                border-radius: 14px;            }
-            .card-body {                padding: 12px;            }
-            .card-title {                font-size: 0.85rem;            }
-            .details-card-box {                width: 95%;                max-height: 85vh;                overflow-y: auto;            }            .category-movies-grid {                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));                gap: 16px;            }        }
-        @media (max-width: 580px) {            header, header.scrolled {                flex-direction: column;                align-items: center;                padding: 12px 16px;                gap: 12px;                background: #060609;            }
-            .logo {                font-size: 1.4rem;            }
-            .nav-controls {                width: 100%;                flex-direction: column;                gap: 10px;            }
-            .category-tabs {                width: 100%;                max-width: 100%;                justify-content: space-between;                background: rgba(255, 255, 255, 0.04);            }
-            .tab-btn {                flex: 1;                text-align: center;                padding: 8px 10px;                font-size: 0.75rem;            }
-            .search-container {                width: 100%;            }
-            .search-container input, .search-container input:focus {                width: 100%;                padding: 11px 16px 11px 44px;                font-size: 0.85rem;                background: rgba(255, 255, 255, 0.04);                border: 1px solid rgba(255, 255, 255, 0.08);                border-radius: 12px;            }
-            .search-container input:focus {                border-color: var(--accent-primary);                background: rgba(22, 22, 31, 0.95);                box-shadow: 0 4px 20px rgba(229, 9, 20, 0.15);            }
-            .search-container svg {                left: 16px;                width: 16px;                height: 16px;            }
-            .hero-carousel-container {                height: 52vh;                min-height: 360px;                padding-top: 110px;            }
-            .hero-title {                font-size: 1.9rem;            }
-            .hero-meta {                font-size: 0.8rem;                margin-bottom: 16px;            }
-            .btn-stream {                width: 100%;                text-align: center;                padding: 12px;            }
-            .row-header {                padding: 0 16px;                margin-bottom: 12px;            }
-            .row-title {                font-size: 1.15rem;            }
-            .carousel-viewport {                padding: 4px 16px 16px 16px;                gap: 14px;            }
-            .media-card {                flex: 0 0 140px;            }
-            .carousel-dots {                bottom: 16px;                right: 16px;            }            .category-modal-overlay {                padding-top: 160px;            }            .category-modal-title {                font-size: 1.6rem;            }        }    </style></head><body>
-    <header id="app-navigation">        <a href="#" class="logo" onclick="resetFilters(event)">Cine<span>Stream</span></a>        <div class="nav-controls">            <div class="category-tabs">                <button class="tab-btn active" data-category="home" onclick="navigateActiveTab('home', this)">Home</button>                <button class="tab-btn" data-category="bollywood" onclick="navigateActiveTab('bollywood', this)">Bollywood</button>                <button class="tab-btn" data-category="hollywood" onclick="navigateActiveTab('hollywood', this)">Hollywood</button>                <button class="tab-btn" data-category="series" onclick="navigateActiveTab('series', this)">Series</button>            </div>            <div class="search-container">                <input type="text" id="live-search" placeholder="Quick search...">                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>            </div>        </div>    </header>
-    <section class="hero-carousel-container" id="hero-carousel-container">        <div class="hero-track" id="main-slider-track"></div>        <div class="carousel-dots" id="slider-dots-box"></div>    </section>
-    <main class="content-wrap">        <section class="row-container" id="bollywood-track-wrapper">            <div class="row-header">                <h2 class="row-title">Bollywood Hits</h2>                <div class="carousel-arrows">                    <button class="arrow-btn" onclick="scrollCarousel('bollywood-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>                    <button class="arrow-btn" onclick="scrollCarousel('bollywood-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>                </div>            </div>            <div class="carousel-viewport" id="bollywood-render-grid"></div>        </section>
-        <section class="row-container" id="hollywood-track-wrapper">            <div class="row-header">                <h2 class="row-title">Hollywood Blockbusters</h2>                <div class="carousel-arrows">                    <button class="arrow-btn" onclick="scrollCarousel('hollywood-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>                    <button class="arrow-btn" onclick="scrollCarousel('hollywood-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>                </div>            </div>            <div class="carousel-viewport" id="hollywood-render-grid"></div>        </section>
-        <section class="row-container" id="series-track-wrapper">            <div class="row-header">                <h2 class="row-title">Must-Watch Web Series</h2>                <div class="carousel-arrows">                    <button class="arrow-btn" onclick="scrollCarousel('series-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>                    <button class="arrow-btn" onclick="scrollCarousel('series-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>                </div>            </div>            <div class="carousel-viewport" id="series-render-grid"></div>        </section>    </main>
-    <div class="category-modal-overlay" id="global-category-overlay">        <div class="category-modal-header">            <h2 class="category-modal-title" id="category-title-target">Category</h2>            <button class="close-category-btn" onclick="handleBackToHomeAction()">Back to Home</button>        </div>        <div class="category-movies-grid" id="category-grid-target"></div>        <div class="see-more-trigger-container" id="see-more-action-box">            <button class="btn-see-more" onclick="loadNextCategoryBatch()">See More</button>        </div>    </div>
-    <div class="details-panel-overlay" id="global-details-panel">        <div class="details-card-box">            <button class="close-details-btn" onclick="triggerBackNavigation()">&times;</button>            <div class="details-banner-img" id="panel-banner-target"></div>            <div class="details-info-content">                <h2 class="details-title" id="panel-title-target">Title</h2>                <div class="details-meta-row">                    <span class="rating-star" id="panel-rating-target">★ 0.0</span>                    <span id="panel-type-target">MOVIE</span>                    <span>•</span>                    <span id="panel-genre-target">Genre</span>                </div>                <p class="details-desc-text" id="panel-desc-target">Description</p>                <button class="play-master-btn" id="panel-play-trigger">                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>                    Stream Video Now                </button>            </div>        </div>    </div>
-    <div class="player-modal" id="global-player-overlay">        <div class="player-window-box">            <button class="close-player-btn" onclick="triggerBackNavigation()">&times;</button>            <iframe id="cinema-frame-element" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>        </div>    </div>
-    <script src="app.js"></script>    <script>        /* CENTRALIZED SYSTEM HISTORY ROUTING MANAGEMENT ENGINE */        let trackingCategoryToken = "home";        let trackedItemsCounter = 0;        const paginationThreshold = 8; 
-        // We track custom open layers via history state keys        let activePanelViewId = null;        let isCinemaViewActive = false;
+        @media (max-width: 992px) {
+            header {
+                padding: 16px 4%;
+            }
+            .search-container input {
+                width: 200px;
+            }
+            .search-container input:focus {
+                width: 260px;
+            }
+        }
+        @media (max-width: 768px) {
+            header, header.scrolled {
+                padding: 14px 20px;
+                background: #0e0e12;
+                border-bottom: 1px solid var(--border-subtle);
+                flex-direction: row;
+                justify-content: space-between;
+                gap: 16px;
+            }
+            .nav-controls {
+                gap: 14px;
+                width: auto;
+                flex-grow: 1;
+                justify-content: flex-end;
+            }
+            .category-tabs {
+                display: flex;
+                max-width: 280px;
+                background: rgba(255, 255, 255, 0.02);
+            }
+            .tab-btn {
+                padding: 6px 14px;
+                font-size: 0.8rem;
+            }
+            .search-container {
+                position: relative;
+            }
+            .search-container input {
+                width: 160px;
+                padding: 10px 16px 10px 38px;
+                font-size: 0.85rem;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+            }
+            .search-container input:focus {
+                width: 220px;
+                border-color: var(--accent-primary);
+                background: rgba(14, 14, 18, 0.95);
+            }
+            .search-container svg {
+                left: 14px;
+                width: 14px;
+                height: 14px;
+            }
+            .hero-carousel-container {
+                height: 58vh;
+                min-height: 420px;
+                padding-top: 60px;
+            }
+            .hero-title {
+                font-size: 2.4rem;
+                letter-spacing: -1px;
+            }
+            .hero-description {
+                display: none;
+            }
+            .carousel-arrows {
+                display: none;
+            }
+            .media-card {
+                flex: 0 0 170px;
+                border-radius: 14px;
+            }
+            .card-body {
+                padding: 12px;
+            }
+            .card-title {
+                font-size: 0.85rem;
+            }
+            .details-card-box {
+                width: 95%;
+                max-height: 85vh;
+                overflow-y: auto;
+            }
+            .category-movies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 16px;
+            }
+        }
+        @media (max-width: 580px) {
+            header, header.scrolled {
+                flex-direction: column;
+                align-items: center;
+                padding: 12px 16px;
+                gap: 12px;
+                background: #060609;
+            }
+            .logo {
+                font-size: 1.4rem;
+            }
+            .nav-controls {
+                width: 100%;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .category-tabs {
+                width: 100%;
+                max-width: 100%;
+                justify-content: space-between;
+                background: rgba(255, 255, 255, 0.04);
+            }
+            .tab-btn {
+                flex: 1;
+                text-align: center;
+                padding: 8px 10px;
+                font-size: 0.75rem;
+            }
+            .search-container {
+                width: 100%;
+            }
+            .search-container input, .search-container input:focus {
+                width: 100%;
+                padding: 11px 16px 11px 44px;
+                font-size: 0.85rem;
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 12px;
+            }
+            .search-container input:focus {
+                border-color: var(--accent-primary);
+                background: rgba(22, 22, 31, 0.95);
+                box-shadow: 0 4px 20px rgba(229, 9, 20, 0.15);
+            }
+            .search-container svg {
+                left: 16px;
+                width: 16px;
+                height: 16px;
+            }
+            .hero-carousel-container {
+                height: 52vh;
+                min-height: 360px;
+                padding-top: 110px;
+            }
+            .hero-title {
+                font-size: 1.9rem;
+            }
+            .hero-meta {
+                font-size: 0.8rem;
+                margin-bottom: 16px;
+            }
+            .btn-stream {
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+            }
+            .row-header {
+                padding: 0 16px;
+                margin-bottom: 12px;
+            }
+            .row-title {
+                font-size: 1.15rem;
+            }
+            .carousel-viewport {
+                padding: 4px 16px 16px 16px;
+                gap: 14px;
+            }
+            .media-card {
+                flex: 0 0 140px;
+            }
+            .carousel-dots {
+                bottom: 16px;
+                right: 16px;
+            }
+            .category-modal-overlay {
+                padding-top: 160px;
+            }
+            .category-modal-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="app-navigation">
+        <a href="#" class="logo" onclick="resetFilters(event)">Cine<span>Stream</span></a>
+        <div class="nav-controls">
+            <div class="category-tabs">
+                <button class="tab-btn active" data-category="home" onclick="navigateActiveTab('home', this)">Home</button>
+                <button class="tab-btn" data-category="bollywood" onclick="navigateActiveTab('bollywood', this)">Bollywood</button>
+                <button class="tab-btn" data-category="hollywood" onclick="navigateActiveTab('hollywood', this)">Hollywood</button>
+                <button class="tab-btn" data-category="series" onclick="navigateActiveTab('series', this)">Series</button>
+            </div>
+            <div class="search-container">
+                <input type="text" id="live-search" placeholder="Quick search...">
+                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            </div>
+        </div>
+    </header>
 
-        function navigateActiveTab(categoryKey, activeBtn) {            if (categoryKey === trackingCategoryToken) return;            if (categoryKey === 'home') {                history.pushState({ category: 'home' }, "", window.location.pathname);                executeRenderWorkflow('home');            } else {                history.pushState({ category: categoryKey }, "", `?category=${categoryKey}`);                executeRenderWorkflow(categoryKey);            }        }
+    <section class="hero-carousel-container" id="hero-carousel-container">
+        <div class="hero-track" id="main-slider-track"></div>
+        <div class="carousel-dots" id="slider-dots-box"></div>
+    </section>
 
-        function executeRenderWorkflow(categoryKey) {            trackingCategoryToken = categoryKey;            
-            document.querySelectorAll('.tab-btn').forEach(btn => {                if(btn.getAttribute('data-category') === categoryKey) {                    btn.classList.add('active');                } else {                    btn.classList.remove('active');                }            });
+    <main class="content-wrap">
+        <section class="row-container" id="bollywood-track-wrapper">
+            <div class="row-header">
+                <h2 class="row-title">Bollywood Hits</h2>
+                <div class="carousel-arrows">
+                    <button class="arrow-btn" onclick="scrollCarousel('bollywood-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+                    <button class="arrow-btn" onclick="scrollCarousel('bollywood-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+                </div>
+            </div>
+            <div class="carousel-viewport" id="bollywood-render-grid"></div>
+        </section>
 
-            if (categoryKey === 'home') {                hideCategoryOverlayDOM();                window.scrollTo({ top: 0, behavior: 'smooth' });                return;            }
-            displayCategoryOverlayDOM(categoryKey);        }
+        <section class="row-container" id="hollywood-track-wrapper">
+            <div class="row-header">
+                <h2 class="row-title">Hollywood Blockbusters</h2>
+                <div class="carousel-arrows">
+                    <button class="arrow-btn" onclick="scrollCarousel('hollywood-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+                    <button class="arrow-btn" onclick="scrollCarousel('hollywood-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+                </div>
+            </div>
+            <div class="carousel-viewport" id="hollywood-render-grid"></div>
+        </section>
 
-        function displayCategoryOverlayDOM(categoryKey) {            trackedItemsCounter = 0;            const targetModal = document.getElementById('global-category-overlay');            const targetTitle = document.getElementById('category-title-target');            const targetGrid = document.getElementById('category-grid-target');            
-            targetTitle.innerText = categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1) + " Collection";            targetGrid.innerHTML = "";             
-            targetModal.classList.add('active');            document.body.style.overflow = "hidden";            
-            renderSelectedCategoryView();        }
+        <section class="row-container" id="series-track-wrapper">
+            <div class="row-header">
+                <h2 class="row-title">Must-Watch Web Series</h2>
+                <div class="carousel-arrows">
+                    <button class="arrow-btn" onclick="scrollCarousel('series-render-grid', -1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+                    <button class="arrow-btn" onclick="scrollCarousel('series-render-grid', 1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+                </div>
+            </div>
+            <div class="carousel-viewport" id="series-render-grid"></div>
+        </section>
+    </main>
 
-        function hideCategoryOverlayDOM() {            document.getElementById('global-category-overlay').classList.remove('active');            document.body.style.overflow = "";            const originalTabs = document.querySelectorAll('.tab-btn');            originalTabs.forEach(btn => btn.classList.remove('active'));            if (originalTabs[0]) originalTabs[0].classList.add('active');        }
+    <div class="category-modal-overlay" id="global-category-overlay">
+        <div class="category-modal-header">
+            <h2 class="category-modal-title" id="category-title-target">Category</h2>
+            <button class="close-category-btn" onclick="triggerStepBack()">Back to Home</button>
+        </div>
+        <div class="category-movies-grid" id="category-grid-target"></div>
+        <div class="see-more-trigger-container" id="see-more-action-box">
+            <button class="btn-see-more" onclick="loadNextCategoryBatch()">See More</button>
+        </div>
+    </div>
 
-        function handleBackToHomeAction() {            history.pushState({ category: 'home' }, "", window.location.pathname);            executeRenderWorkflow('home');        }
+    <div class="details-panel-overlay" id="global-details-panel">
+        <div class="details-card-box">
+            <button class="close-details-btn" onclick="triggerStepBack()">&times;</button>
+            <div class="details-banner-img" id="panel-banner-target"></div>
+            <div class="details-info-content">
+                <h2 class="details-title" id="panel-title-target">Title</h2>
+                <div class="details-meta-row">
+                    <span class="rating-star" id="panel-rating-target">★ 0.0</span>
+                    <span id="panel-type-target">MOVIE</span>
+                    <span>•</span>
+                    <span id="panel-genre-target">Genre</span>
+                </div>
+                <p class="details-desc-text" id="panel-desc-target">Description</p>
+                <button class="play-master-btn" id="panel-play-trigger">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    Stream Video Now
+                </button>
+            </div>
+        </div>
+    </div>
 
-        function renderSelectedCategoryView() {            const targetGrid = document.getElementById('category-grid-target');            const actionsBox = document.getElementById('see-more-action-box');            const targetRowSource = document.getElementById(`${trackingCategoryToken}-render-grid`);
+    <div class="player-modal" id="global-player-overlay">
+        <div class="player-window-box">
+            <button class="close-player-btn" onclick="triggerStepBack()">&times;</button>
+            <iframe id="cinema-frame-element" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+        </div>
+    </div>
 
-            if (!targetRowSource) {                targetGrid.innerHTML = `<p class="empty-placeholder-msg">No media entries found for this category tier.</p>`;                actionsBox.style.display = "none";                return;            }
+    <script src="app.js"></script>
+    <script>
+        /* SECURE LINEAR NAVIGATION ENGINE (STATE STACK MODEL) */
+        let trackingCategoryToken = "home";
+        let trackedItemsCounter = 0;
+        const paginationThreshold = 8; 
 
-            const rawSourceCards = Array.from(targetRowSource.querySelectorAll('.media-card'));            const totalSourceCount = rawSourceCards.length;
-            const batchLimitIndex = trackedItemsCounter + paginationThreshold;            const itemsToPopulate = rawSourceCards.slice(trackedItemsCounter, batchLimitIndex);
+        // Memory stack array mirrors the tracking steps exactly
+        let historyStateStack = ['home']; 
+        let internalNavigationFlag = false;
 
-            if (itemsToPopulate.length === 0 && trackedItemsCounter === 0) {                targetGrid.innerHTML = `<p class="empty-placeholder-msg">No entries available in this grid tier.</p>`;                actionsBox.style.display = "none";                return;            }
+        function navigateActiveTab(categoryKey, activeBtn) {
+            if (categoryKey === trackingCategoryToken) return;
+            pushNavigationState(categoryKey);
+        }
 
-            itemsToPopulate.forEach(card => {                const structuralClone = card.cloneNode(true);                structuralClone.addEventListener('click', (e) => {                    card.click();                });                targetGrid.appendChild(structuralClone);            });
+        // Shared dynamic entry-point function for states
+        function pushNavigationState(newStateToken) {
+            internalNavigationFlag = true;
+            
+            // Build visual URL query paths based on target states
+            let dynamicUrl = window.location.pathname;
+            if (newStateToken !== 'home' && ['bollywood', 'hollywood', 'series'].includes(newStateToken)) {
+                dynamicUrl = `?category=${newStateToken}`;
+            }
+
+            history.pushState({ token: newStateToken }, "", dynamicUrl);
+            historyStateStack.push(newStateToken);
+            applyActiveViewState(newStateToken);
+            internalNavigationFlag = false;
+        }
+
+        // Explicit single step-back controller invoked by close UI triggers
+        function triggerStepBack() {
+            if (historyStateStack.length > 1) {
+                history.back();
+            }
+        }
+
+        // Centralized DOM rendering workflow layer
+        function applyActiveViewState(viewToken) {
+            // 1. Reset all open visual layout containers cleanly
+            document.getElementById('global-category-overlay').classList.remove('active');
+            if (window.closeDetailsPanel) window.closeDetailsPanel();
+            if (window.closeCinemaScreen) window.closeCinemaScreen();
+            document.body.style.overflow = "";
+
+            // 2. Map structural view layouts
+            if (viewToken === 'home') {
+                trackingCategoryToken = 'home';
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if(btn.getAttribute('data-category') === 'home') btn.classList.add('active');
+                });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } 
+            else if (['bollywood', 'hollywood', 'series'].includes(viewToken)) {
+                trackingCategoryToken = viewToken;
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if(btn.getAttribute('data-category') === viewToken) btn.classList.add('active');
+                });
+                displayCategoryOverlayDOM(viewToken);
+            } 
+            else if (viewToken.startsWith('details-')) {
+                // Keep background context layout saved
+                const parsedCategory = historyStateStack.find(t => ['bollywood', 'hollywood', 'series'].includes(t)) || 'home';
+                if (parsedCategory !== 'home') displayCategoryOverlayDOM(parsedCategory);
+                
+                const targetMediaId = viewToken.replace('details-', '');
+                if (window.openDetailsPanel) window.openDetailsPanel(targetMediaId);
+            } 
+            else if (viewToken.startsWith('player-')) {
+                // Restore underlying view state contexts beneath movie player view
+                const parsedCategory = historyStateStack.find(t => ['bollywood', 'hollywood', 'series'].includes(t)) || 'home';
+                if (parsedCategory !== 'home') displayCategoryOverlayDOM(parsedCategory);
+                
+                const priorDetailsToken = [...historyStateStack].reverse().find(t => t.startsWith('details-'));
+                if (priorDetailsToken && window.openDetailsPanel) {
+                    window.openDetailsPanel(priorDetailsToken.replace('details-', ''));
+                }
+
+                const targetVideoUrl = decodeURIComponent(viewToken.replace('player-', ''));
+                if (window.openCinemaScreen) window.openCinemaScreen(targetVideoUrl);
+            }
+        }
+
+        function displayCategoryOverlayDOM(categoryKey) {
+            if (trackingCategoryToken !== categoryKey) return; 
+            trackedItemsCounter = 0;
+            const targetModal = document.getElementById('global-category-overlay');
+            const targetTitle = document.getElementById('category-title-target');
+            const targetGrid = document.getElementById('category-grid-target');
+            
+            targetTitle.innerText = categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1) + " Collection";
+            targetGrid.innerHTML = ""; 
+            
+            targetModal.classList.add('active');
+            document.body.style.overflow = "hidden";
+            
+            renderSelectedCategoryView();
+        }
+
+        function renderSelectedCategoryView() {
+            const targetGrid = document.getElementById('category-grid-target');
+            const actionsBox = document.getElementById('see-more-action-box');
+            const targetRowSource = document.getElementById(`${trackingCategoryToken}-render-grid`);
+
+            if (!targetRowSource) {
+                targetGrid.innerHTML = `<p class="empty-placeholder-msg">No media entries found for this category tier.</p>`;
+                actionsBox.style.display = "none";
+                return;
+            }
+
+            const rawSourceCards = Array.from(targetRowSource.querySelectorAll('.media-card'));
+            const totalSourceCount = rawSourceCards.length;
+            const batchLimitIndex = trackedItemsCounter + paginationThreshold;
+            const itemsToPopulate = rawSourceCards.slice(trackedItemsCounter, batchLimitIndex);
+
+            if (itemsToPopulate.length === 0 && trackedItemsCounter === 0) {
+                targetGrid.innerHTML = `<p class="empty-placeholder-msg">No entries available in this grid tier.</p>`;
+                actionsBox.style.display = "none";
+                return;
+            }
+
+            itemsToPopulate.forEach(card => {
+                const structuralClone = card.cloneNode(true);
+                structuralClone.addEventListener('click', (e) => {
+                    card.click();
+                });
+                targetGrid.appendChild(structuralClone);
+            });
 
             trackedItemsCounter += itemsToPopulate.length;
 
-            if (totalSourceCount < 4) {                targetGrid.style.justifyContent = "center";            } else {                targetGrid.style.justifyContent = "start";            }
+            if (totalSourceCount < 4) {
+                targetGrid.style.justifyContent = "center";
+            } else {
+                targetGrid.style.justifyContent = "start";
+            }
 
-            if (trackedItemsCounter >= totalSourceCount || totalSourceCount <= paginationThreshold) {                actionsBox.style.display = "none";            } else {                actionsBox.style.display = "flex";            }        }
+            if (trackedItemsCounter >= totalSourceCount || totalSourceCount <= paginationThreshold) {
+                actionsBox.style.display = "none";
+            } else {
+                actionsBox.style.display = "flex";
+            }
+        }
 
-        function loadNextCategoryBatch() {            renderSelectedCategoryView();        }
+        function loadNextCategoryBatch() {
+            renderSelectedCategoryView();
+        }
 
-        function resetFilters(event) {            event.preventDefault();            handleBackToHomeAction();        }
+        function resetFilters(event) {
+            event.preventDefault();
+            pushNavigationState('home');
+        }
 
-        /* --- DETAILS OVERLAY & CINEMA PLAYER SYSTEM INTERCEPTIONS --- */
-        
-        // This function hooks your app.js layout clicks directly to browser state tracking
+        // Intercept function wraps native triggers safely into the step stack 
         function InterceptDynamicDOMPopups() {
-            // Hook details modal opening system
             const originalOpenDetailsPanel = window.openDetailsPanel;
             if (originalOpenDetailsPanel) {
                 window.openDetailsPanel = function(mediaId) {
-                    originalOpenDetailsPanel(mediaId);
-                    activePanelViewId = mediaId;
-                    // Push a history tracking point for details presentation layer
-                    history.pushState({ 
-                        category: trackingCategoryToken, 
-                        panelOpen: true, 
-                        mediaId: mediaId,
-                        cinemaOpen: false
-                    }, "");
+                    if (!internalNavigationFlag) {
+                        pushNavigationState(`details-${mediaId}`);
+                    } else {
+                        originalOpenDetailsPanel(mediaId);
+                    }
                 };
             }
 
-            // Hook video play screen opening system
             const originalOpenCinemaScreen = window.openCinemaScreen;
             if (originalOpenCinemaScreen) {
                 window.openCinemaScreen = function(videoUrl) {
-                    originalOpenCinemaScreen(videoUrl);
-                    isCinemaViewActive = true;
-                    // Push a history tracking point for video viewing layer
-                    history.pushState({ 
-                        category: trackingCategoryToken, 
-                        panelOpen: activePanelViewId ? true : false,
-                        mediaId: activePanelViewId,
-                        cinemaOpen: true
-                    }, "");
+                    if (!internalNavigationFlag) {
+                        pushNavigationState(`player-${encodeURIComponent(videoUrl)}`);
+                    } else {
+                        originalOpenCinemaScreen(videoUrl);
+                    }
                 };
             }
         }
 
-        // Shared trigger logic function for all markup close 'X' buttons
-        function triggerBackNavigation() {
-            history.back();
-        }
-
-        /* State synchronization router layer */
+        /* Popstate synchronization browser back/forward routing layer */
         window.addEventListener('popstate', (event) => {
-            const state = event.state;
+            if (internalNavigationFlag) return;
 
-            // 1. Manage Fullscreen Video Player State
-            if (isCinemaViewActive && (!state || !state.cinemaOpen)) {
-                if (window.closeCinemaScreen) window.closeCinemaScreen();
-                isCinemaViewActive = false;
-            } else if (state && state.cinemaOpen && !isCinemaViewActive) {
-                // If moving forward to player state
-                isCinemaViewActive = true;
-            }
-
-            // 2. Manage Details Presenter State
-            if (activePanelViewId && (!state || !state.panelOpen)) {
-                if (window.closeDetailsPanel) window.closeDetailsPanel();
-                activePanelViewId = null;
-            } else if (state && state.panelOpen && !activePanelViewId) {
-                // If moving backward into a details panel from video screen state
-                if (window.openDetailsPanel && state.mediaId) {
-                    window.openDetailsPanel(state.mediaId);
-                    activePanelViewId = state.mediaId;
+            if (event.state && event.state.token) {
+                const destinationToken = event.state.token;
+                const matchIndex = historyStateStack.indexOf(destinationToken);
+                
+                if (matchIndex !== -1) {
+                    // Truncate forward items sequentially when navigating back
+                    historyStateStack = historyStateStack.slice(0, matchIndex + 1);
+                } else {
+                    historyStateStack.push(destinationToken);
                 }
-            }
-
-            // 3. Manage Category Selection Tier State
-            if (state && state.category) {
-                executeRenderWorkflow(state.category);
+                applyActiveViewState(destinationToken);
             } else {
-                executeRenderWorkflow('home');
+                historyStateStack = ['home'];
+                applyActiveViewState('home');
             }
         });
 
-        /* Setup Routing Deep-link hooks */
+        /* Setup Routing Deep-link initialization hooks */
         window.addEventListener('DOMContentLoaded', () => {
             InterceptDynamicDOMPopups();
             
@@ -251,11 +1200,12 @@
             const routeDestination = urlSearchParameters.get('category');
             
             if (routeDestination && ['bollywood', 'hollywood', 'series'].includes(routeDestination)) {
-                history.replaceState({ category: 'home' }, "", window.location.pathname);
-                history.pushState({ category: routeDestination }, "", `?category=${routeDestination}`);
-                executeRenderWorkflow(routeDestination);
+                history.replaceState({ token: 'home' }, "", window.location.pathname);
+                history.pushState({ token: routeDestination }, "", `?category=${routeDestination}`);
+                historyStateStack = ['home', routeDestination];
+                applyActiveViewState(routeDestination);
             } else {
-                history.replaceState({ category: 'home' }, "", window.location.pathname);
+                history.replaceState({ token: 'home' }, "", window.location.pathname);
             }
         });
 
@@ -267,4 +1217,6 @@
                 navigationBar.classList.remove('scrolled');
             }
         });
-    </script></body></html>
+    </script>
+</body>
+</html>
