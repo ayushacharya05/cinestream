@@ -953,7 +953,7 @@
     <div class="category-modal-overlay" id="global-category-overlay">
         <div class="category-modal-header">
             <h2 class="category-modal-title" id="category-title-target">Category</h2>
-            <button class="close-category-btn" onclick="triggerStepBack()">Back to Home</button>
+            <button class="close-category-btn" onclick="handleUIGobackBtn()">Back to Home</button>
         </div>
         <div class="category-movies-grid" id="category-grid-target"></div>
         <div class="see-more-trigger-container" id="see-more-action-box">
@@ -963,7 +963,7 @@
 
     <div class="details-panel-overlay" id="global-details-panel">
         <div class="details-card-box">
-            <button class="close-details-btn" onclick="triggerStepBack()">&times;</button>
+            <button class="close-details-btn" onclick="handleUIGobackBtn()">&times;</button>
             <div class="details-banner-img" id="panel-banner-target"></div>
             <div class="details-info-content">
                 <h2 class="details-title" id="panel-title-target">Title</h2>
@@ -984,108 +984,64 @@
 
     <div class="player-modal" id="global-player-overlay">
         <div class="player-window-box">
-            <button class="close-player-btn" onclick="triggerStepBack()">&times;</button>
+            <button class="close-player-btn" onclick="handleUIGobackBtn()">&times;</button>
             <iframe id="cinema-frame-element" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
         </div>
     </div>
 
     <script src="app.js"></script>
     <script>
-        /* FEATURE LAYER SCRIPT: Connects dynamic views perfectly with strict History API routing */
-        let trackingCategoryToken = "home";
+        /* UNIFIED CENTRALIZED HISTORY ENGINE: Evaluates layout changes cleanly across all states */
+        let trackingCategoryToken = "";
         let trackedItemsCounter = 0;
         const paginationThreshold = 8; 
 
-        // State Machine Tracking Array
-        let historyStateStack = ['home'];
-        let internalNavigationFlag = false;
+        // State identifiers used to safely compute visual layers 
+        const STATE_HOME = 'home';
+        const STATE_CATEGORY = 'category';
+        const STATE_DETAILS = 'details';
+        const STATE_PLAYER = 'player';
 
+        // Replaced custom navigation function to safely anchor standard behavior inside history states
         function navigateActiveTab(categoryKey, activeBtn) {
-            if (categoryKey === trackingCategoryToken) return;
-            pushNavigationState(categoryKey);
-        }
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            if(activeBtn) activeBtn.classList.add('active');
 
-        function pushNavigationState(newStateToken) {
-            internalNavigationFlag = true;
-            let dynamicUrl = window.location.pathname;
-            
-            if (newStateToken !== 'home' && ['bollywood', 'hollywood', 'series'].includes(newStateToken)) {
-                dynamicUrl = `?category=${newStateToken}`;
+            if (categoryKey === 'home') {
+                resetToHomeState();
+                return;
             }
-
-            history.pushState({ token: newStateToken }, "", dynamicUrl);
-            historyStateStack.push(newStateToken);
-            applyActiveViewState(newStateToken);
-            internalNavigationFlag = false;
+            openCategoryModal(categoryKey);
         }
 
-        // Helper allows UI elements to uniformly trigger browser backward actions cleanly
-        function triggerStepBack() {
-            if (historyStateStack.length > 1) {
-                history.back();
-            }
-        }
-
-        function applyActiveViewState(viewToken) {
-            // Drop overlay panels unconditionally before evaluating state transitions
-            document.getElementById('global-category-overlay').classList.remove('active');
-            if (window.closeDetailsPanel) window.closeDetailsPanel();
-            if (window.closeCinemaScreen) window.closeCinemaScreen();
-            document.body.style.overflow = "";
-
-            if (viewToken === 'home') {
-                trackingCategoryToken = 'home';
-                document.querySelectorAll('.tab-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.textContent.trim().toLowerCase() === 'home') btn.classList.add('active');
-                });
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } 
-            else if (['bollywood', 'hollywood', 'series'].includes(viewToken)) {
-                trackingCategoryToken = viewToken;
-                document.querySelectorAll('.tab-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.textContent.trim().toLowerCase() === viewToken) btn.classList.add('active');
-                });
-                displayCategoryOverlayDOM(viewToken);
-            } 
-            else if (viewToken.startsWith('details-')) {
-                // Ensure correct parent categories display behind details panels upon popstate triggers
-                const parsedCategory = historyStateStack.find(t => ['bollywood', 'hollywood', 'series'].includes(t)) || 'home';
-                if (parsedCategory !== 'home') displayCategoryOverlayDOM(parsedCategory);
-                
-                const targetMediaId = viewToken.replace('details-', '');
-                if (window.openDetailsPanel) window.openDetailsPanel(targetMediaId);
-            } 
-            else if (viewToken.startsWith('player-')) {
-                // Make sure context layouts remain structurally open below video frame
-                const parsedCategory = historyStateStack.find(t => ['bollywood', 'hollywood', 'series'].includes(t)) || 'home';
-                if (parsedCategory !== 'home') displayCategoryOverlayDOM(parsedCategory);
-
-                const priorDetailsToken = [...historyStateStack].reverse().find(t => t.startsWith('details-'));
-                if (priorDetailsToken && window.openDetailsPanel) {
-                    window.openDetailsPanel(priorDetailsToken.replace('details-', ''));
-                }
-
-                const targetVideoUrl = decodeURIComponent(viewToken.replace('player-', ''));
-                if (window.openCinemaScreen) window.openCinemaScreen(targetVideoUrl);
-            }
-        }
-
-        function displayCategoryOverlayDOM(categoryKey) {
+        function openCategoryModal(categoryKey) {
             trackingCategoryToken = categoryKey;
             trackedItemsCounter = 0;
+                        
             const targetModal = document.getElementById('global-category-overlay');
             const targetTitle = document.getElementById('category-title-target');
             const targetGrid = document.getElementById('category-grid-target');
-            
+                        
             targetTitle.innerText = categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1) + " Collection";
             targetGrid.innerHTML = ""; 
-            
+                         
             targetModal.classList.add('active');
             document.body.style.overflow = "hidden";
-            
+                        
             renderSelectedCategoryView();
+            syncModalHistoryState(STATE_CATEGORY);
+        }
+
+        function closeCategoryModal() {
+            document.getElementById('global-category-overlay').classList.remove('active');
+            if (!document.getElementById('global-details-panel').classList.contains('active') && 
+                !document.getElementById('global-player-overlay').classList.contains('active')) {
+                document.body.style.overflow = "";
+            }
+                        
+            const originalTabs = document.querySelectorAll('.tab-btn');
+            originalTabs.forEach(btn => btn.classList.remove('active'));
+            if (originalTabs[0]) originalTabs[0].classList.add('active');
         }
 
         function renderSelectedCategoryView() {
@@ -1114,88 +1070,135 @@
                 structuralClone.addEventListener('click', (e) => {
                     card.click();
                 });
-                targetGrid.appendChild(structuralClone);
+                targetGrid.appendChild(structuralClone);            
             });
 
-            trackedItemsCounter += itemsToPopulate.length;
+            trackedItemsCounter += itemsToPopulate.length;            
             actionsBox.style.display = (trackedItemsCounter >= rawSourceCards.length) ? "none" : "flex";
         }
 
-        function loadNextCategoryBatch() {
-            renderSelectedCategoryView();
+        function loadNextCategoryBatch() {            
+            renderSelectedCategoryView();        
         }
 
-        function resetFilters(event) {
-            event.preventDefault();
-            pushNavigationState('home');
+        function resetFilters(event) {            
+            if(event) event.preventDefault();            
+            resetToHomeState();
         }
 
-        // INTERCEPT ENGINE: Syncs core open/close triggers in app.js with History API Stack Tokens
-        function patchAppJsNavigationInterceptors() {
-            const originalOpenDetailsPanel = window.openDetailsPanel;
-            if (originalOpenDetailsPanel) {
-                window.openDetailsPanel = function(mediaId) {
-                    if (!internalNavigationFlag) {
-                        pushNavigationState(`details-${mediaId}`);
-                    } else {
-                        originalOpenDetailsPanel(mediaId);
-                    }
-                };
-            }
-
-            const originalOpenCinemaScreen = window.openCinemaScreen;
-            if (originalOpenCinemaScreen) {
-                window.openCinemaScreen = function(videoUrl) {
-                    if (!internalNavigationFlag) {
-                        pushNavigationState(`player-${encodeURIComponent(videoUrl)}`);
-                    } else {
-                        originalOpenCinemaScreen(videoUrl);
-                    }
-                };
+        function resetToHomeState() {
+            closeCinemaModalDOM();
+            closeDetailsModalDOM();
+            closeCategoryModal();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Re-anchor address stack history cleanly back to normal home root state
+            if(history.state && history.state.uiState !== STATE_HOME) {
+                history.pushState({ uiState: STATE_HOME }, "", window.location.pathname);
             }
         }
 
-        // Listen explicitly to backward popstate changes triggered by hardware or screen back buttons
+        /* HARDWARE AND SCREEN CLOSURE EVENT LISTENERS */
+        function handleUIGobackBtn() {
+            // Emulates hardware back click cleanly to synchronize popstate logic
+            window.history.back();
+        }
+
+        function closeDetailsModalDOM() {
+            const detailsPanel = document.getElementById('global-details-panel');
+            if(detailsPanel) detailsPanel.classList.remove('active');
+            if (!document.getElementById('global-category-overlay').classList.contains('active') && 
+                !document.getElementById('global-player-overlay').classList.contains('active')) {
+                document.body.style.overflow = "";
+            }
+        }
+
+        function closeCinemaModalDOM() {
+            const playerPanel = document.getElementById('global-player-overlay');
+            if(playerPanel) playerPanel.classList.remove('active');
+            
+            const frame = document.getElementById('cinema-frame-element');
+            if(frame) frame.src = ""; // Stop audio stream playbacks instantly
+            
+            if (!document.getElementById('global-category-overlay').classList.contains('active') && 
+                !document.getElementById('global-details-panel').classList.contains('active')) {
+                document.body.style.overflow = "";
+            }
+        }
+
+        // Monitors modal mutations and injects linear application state tokens inside history entries
+        function syncModalHistoryState(targetUIState) {
+            if (!history.state || history.state.uiState !== targetUIState) {
+                history.pushState({ uiState: targetUIState }, "");
+            }
+        }
+
+        // Mutation Observer watches component attributes safely without relying on app.js event racing
+        function initializeDOMStateObservers() {
+            const detailsPanel = document.getElementById('global-details-panel');
+            const playerPanel = document.getElementById('global-player-overlay');
+
+            const observerConfig = { attributes: true, attributeFilter: ['class'] };
+
+            const detailsObserver = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.target.classList.contains('active')) {
+                        syncModalHistoryState(STATE_DETAILS);
+                        document.body.style.overflow = "hidden";
+                    }
+                });
+            });
+
+            const playerObserver = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.target.classList.contains('active')) {
+                        syncModalHistoryState(STATE_PLAYER);
+                        document.body.style.overflow = "hidden";
+                    }
+                });
+            });
+
+            if(detailsPanel) detailsObserver.observe(detailsPanel, observerConfig);
+            if(playerPanel) playerObserver.observe(playerPanel, observerConfig);
+        }
+
+        // Clean popstate logic maps backward button inputs directly to clear down visual layouts sequentially
         window.addEventListener('popstate', (event) => {
-            if (event.state && event.state.token) {
-                const destinationToken = event.state.token;
-                const matchIndex = historyStateStack.indexOf(destinationToken);
-                
-                if (matchIndex !== -1) {
-                    historyStateStack = historyStateStack.slice(0, matchIndex + 1);
-                } else {
-                    historyStateStack.push(destinationToken);
-                }
-                applyActiveViewState(destinationToken);
-            } else {
-                historyStateStack = ['home'];
-                applyActiveViewState('home');
+            const activeState = (event.state && event.state.uiState) ? event.state.uiState : STATE_HOME;
+
+            if (activeState === STATE_PLAYER) {
+                // Ensure player frame stays intact if history moves here forward
+                return;
+            } 
+            else if (activeState === STATE_DETAILS) {
+                closeCinemaModalDOM();
+            } 
+            else if (activeState === STATE_CATEGORY) {
+                closeCinemaModalDOM();
+                closeDetailsModalDOM();
+            } 
+            else {
+                // Return fallback cleanly back down to home
+                closeCinemaModalDOM();
+                closeDetailsModalDOM();
+                closeCategoryModal();
             }
         });
 
         window.addEventListener('DOMContentLoaded', () => {
-            patchAppJsNavigationInterceptors();
-            
-            const urlSearchParameters = new URLSearchParams(window.location.search);
-            const routeDestination = urlSearchParameters.get('category');
-            
-            if (routeDestination && ['bollywood', 'hollywood', 'series'].includes(routeDestination)) {
-                history.replaceState({ token: 'home' }, "", window.location.pathname);
-                history.pushState({ token: routeDestination }, "", `?category=${routeDestination}`);
-                historyStateStack = ['home', routeDestination];
-                applyActiveViewState(routeDestination);
-            } else {
-                history.replaceState({ token: 'home' }, "", window.location.pathname);
+            // Seed the initial history block so the first hardware back click is trapped cleanly
+            if (!history.state) {
+                history.replaceState({ uiState: STATE_HOME }, "", window.location.pathname);
             }
+            initializeDOMStateObservers();
         });
 
-        window.addEventListener('scroll', () => {
-            const navigationBar = document.getElementById('app-navigation');
-            if (window.scrollY > 20) {
-                navigationBar.classList.add('scrolled');
-            } else {
-                navigationBar.classList.remove('scrolled');
-            }
+        window.addEventListener('scroll', () => {            
+            const navigationBar = document.getElementById('app-navigation');            
+            if (window.scrollY > 20) {                
+                navigationBar.classList.add('scrolled');            
+            } else {                
+                navigationBar.classList.remove('scrolled');            
+            }        
         });
     </script>
 </body>
