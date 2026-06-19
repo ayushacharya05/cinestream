@@ -16,7 +16,7 @@ const contentDatabase = [
         genre: "Horror / Comedy",
         industry: "bollywood", // Maps to Bollywood Hits row
         rating: "7.9",
-        poster: "https://filmyzilla40.com/site_uploads/duplicate/thumb_Bhooth-bangla-(2026)-hindi-movie.jpg",
+        poster: "https://m.media-amazon.com/images/M/MV5BN2Y3NjRhYmMtNWVjMy00ZmE1LWJkNGYtNDY3Y2I3NjkzOGE0XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
         streamUrl: "https://streamimdb.ru/embed/movie/tt29540862",
         releaseDate: "2026-04-10",
         description: "A thrilling upcoming cinematic blend of horror and comedy featuring high-voltage laughter, suspense, and unexpected supernatural twists."
