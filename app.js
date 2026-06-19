@@ -205,6 +205,31 @@ const contentDatabase = [
 
      /**series*/
     {
+        id: "A-Knight-of-the-Seven-Kingdoms",
+        title: "A Knight of the Seven Kingdoms",
+        type: "series",
+        genre: "Epic/Dark Fantasy",
+        industry: "series", // Maps to Must-Watch Web Series row
+        rating: "8.6",
+        poster: "https://m.media-amazon.com/images/M/MV5BYzg4M2U3YWMtMWY4MS00MzFkLTk2ZWQtOThiOGYxZDEyMGQ2XkEyXkFqcGc@._V1_.jpg",
+        streamUrl: "https://streamimdb.ru/embed/tv/tt27497448",
+        releaseDate: "2026-04-17",
+        description: "A century before the events of "Game of Thrones", Ser Duncan the Tall, and his squire, Egg, wander through Westeros while the Targaryen dynasty rule the Iron Throne."
+    },
+
+  {
+        id: "The-Boys",
+        title: "The Boys Season 1-5",
+        type: "series",
+        genre: "Satire/Dark Comedy",
+        industry: "series", // Maps to Must-Watch Web Series row
+        rating: "8.5",
+        poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMhlx0wpKRG9fPPwRh9rXEV2Bw71HNMJHi5q3Q5q3iOxj09T1AxeWRwcg&s=10",
+        streamUrl: "https://streamimdb.ru/embed/tv/tt1190634",
+        releaseDate: "2026-04-8",
+        description: "A group of vigilantes set out to take down corrupt superheroes who abuse their superpowers."
+    },
+    {
         id: "Matka-King",
         title: "Matka King",
         type: "series",
@@ -255,6 +280,7 @@ const contentDatabase = [
         releaseDate: "2023-01-06",
         description: "A Sanitation worker, how he stumbles upon magical powers which leads to a riveting new ride for the man, and how it stirs his humble life."
     },
+    
       
          {
         id: "farzi",
